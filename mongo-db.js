@@ -1,0 +1,1 @@
+//URI mongodb+srv://admin:<Manriquez0110>@manriquezbd.t1wsg.mongodb.net/mariquezProyect?retryWrites=true&w=majority
