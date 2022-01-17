@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+require('dotenv').config();
+
 
 //inicializamos la app
 let app = express();
@@ -32,11 +34,10 @@ app.use(express.json());
 //Ocuparemos las opciones de cors 
 // app.use(cors(corsOptions)); 
 
-app.use('/api',require('./rutas/rutas'));
+app.use('/api',require('./routes/routes'));
 
 //configuracion del puerto
 app.set('port', process.env.PORT || 3000);
-
 
 //SERVIDOR
 app.listen(app.get('port'),()=>{
