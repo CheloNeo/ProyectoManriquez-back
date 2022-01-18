@@ -2,6 +2,8 @@ let controller = {}
 var bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require("jsonwebtoken");
+const { generarToken } = require("../helpers/create-token");
+const { request } = require('express');
 
 controller.creacionUser = async  (req,res)=>{
     const {rut,password} = req.body;
@@ -33,16 +35,7 @@ controller.login = async (req,res)=>{
     .then((data)=>{
         bcrypt.compare(password,data.password,function(err,result){
             if(result == true){
-                const payload = {
-                    check:  true
-                   };
-                 const token = jwt.sign(payload,process.env.SECRET_KEY, {
-                    expiresIn: 1440
-                   });
-                   return res.json({
-                    status:200,
-                    token: token,
-                });
+                generarToken();
             }
             else{
                 res.json({status:500})
@@ -51,15 +44,31 @@ controller.login = async (req,res)=>{
     })
 }
 
-controller.validateToke = async(req, res)=>{
-    const { rut, password } = req.body;
-    //genera jwt y asi generar otro y validar
-    const token = await generarJWT(rut);
+controller.validateToken =  (req, res)=>{
 
-    return res.json({
-        rut,
-        token
-    });
+
+    const {token } = req.body;
+    try {
+        const validation = jwt.verify(token, process.env.SECRET_KEY)
+         const respuesta =  generarToken();
+         res.send(respuesta);
+
+        
+    } catch (error) {
+        console.log(error)
+        res.json({status:500})
+    }
+}
+
+controller.deleteUsuario = (req,res)=>{
+    const rut = req.params.rut;
+    Usuario.deleteOne({ rut })
+    .then(()=>{
+        res.json({status:200});
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 }
 
 module.exports = controller;
