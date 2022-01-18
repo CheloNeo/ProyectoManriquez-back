@@ -16,7 +16,7 @@ controller.creacionUser = async  (req,res)=>{
     //buscar si el usuario esta o no en la  BD
     const usuario = await Usuario.findOne({ rut });
     if (usuario) {
-        return res.status(400).json({
+        return res.json({
             status: 500, // el usuario ya existe
             mensaje:"El usuario ya existe"
         });
@@ -47,11 +47,12 @@ controller.login = async (req,res)=>{
         }
         else{
             bcrypt.compare(password,data.password,function(err,result){
+                
                 if(result == true){
                     res.json(generarToken())
                 }
                 else{
-                    res.json({status:500,mensaje:"Error en el logueo intenta nuevamente"});
+                    res.json({status:500,mensaje:"Contraseña incorrecta!"});
                 }
             })
         }

@@ -31,8 +31,8 @@ require('./mongo-db');
 app.use(morgan('dev'));
 app.use(express.json());
 
-//Ocuparemos las opciones de cors 
-// app.use(cors(corsOptions)); 
+// Ocuparemos las opciones de cors 
+app.use(cors()); 
 
 app.use('/api',require('./routes/routes'));
 

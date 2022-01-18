@@ -6,7 +6,7 @@ const generarToken = ()=>{
     const token = jwt.sign(payload,process.env.SECRET_KEY);
     return {
     status:200,
-    token: token,
+    mensaje: token,
     };    
 }
 
