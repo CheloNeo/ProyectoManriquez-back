@@ -51,6 +51,15 @@ controller.login = async (req,res)=>{
     })
 }
 
+controller.validateToke = async(req, res)=>{
+    const { rut, password } = req.body;
+    //genera jwt y asi generar otro y validar
+    const token = await generarJWT(rut);
 
+    return res.json({
+        rut,
+        token
+    });
+}
 
 module.exports = controller;
