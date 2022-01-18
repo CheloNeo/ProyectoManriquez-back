@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require("jsonwebtoken");
 const { generarToken } = require("../helpers/create-token");
-const { request } = require('express');
+
 
 controller.creacionUser = async  (req,res)=>{
     const {rut,password} = req.body;
@@ -22,27 +22,34 @@ controller.creacionUser = async  (req,res)=>{
 
         user.save().then((data)=>{
             res.json({status:200}); // el usuario es creado exitosamente!
-        },
-        (err)=>{res.json({status:"usuario no creado!"})})   
+        })
+        .catch((err)=>{res.json({status:"usuario no creado!"})})   
     }
 }
+
 
 controller.login = async (req,res)=>{
     // se debe enviar un usuario buscarlo en la base de datos
     // y devolver true si esta y en caso contrario false
     const {rut,password} = req.body;
-    Usuario.findOne({rut})
+    await Usuario.findOne({rut})
     .then((data)=>{
+        // if(data == null){
+        //     res.json({status:500});
+        // }
         bcrypt.compare(password,data.password,function(err,result){
             if(result == true){
-                generarToken();
+                res.json(generarToken())
             }
             else{
-                res.json({status:500})
+                res.json({status:500});
             }
         })
     })
 }
+
+
+
 
 controller.validateToken =  (req, res)=>{
 
@@ -50,8 +57,8 @@ controller.validateToken =  (req, res)=>{
     const {token } = req.body;
     try {
         const validation = jwt.verify(token, process.env.SECRET_KEY)
-         const respuesta =  generarToken();
-         res.send(respuesta);
+        const respuesta =  generarToken();
+        res.send(respuesta);
 
         
     } catch (error) {

@@ -4,7 +4,7 @@ const generarToken = ()=>{
         check:  true
        };
     const token = jwt.sign(payload,process.env.SECRET_KEY, {
-    expiresIn: 0
+    expiresIn: "24h"
     });
     return {
     status:200,
