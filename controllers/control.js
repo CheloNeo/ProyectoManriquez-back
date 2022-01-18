@@ -25,7 +25,6 @@ controller.creacionUser = async  (req,res)=>{
     }
 }
 
-
 controller.login = async (req,res)=>{
     // se debe enviar un usuario buscarlo en la base de datos
     // y devolver true si esta y en caso contrario false
@@ -51,6 +50,7 @@ controller.login = async (req,res)=>{
         })
     })
 }
+
 
 
 module.exports = controller;
