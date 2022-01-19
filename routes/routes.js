@@ -21,7 +21,7 @@ router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 //cliente
 
 router.post('/createCliente', controller_Cliente.crearCliente);
-// router.post('/mensajeMasivo', controller_Ventas.crearVenta);
+router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
 // router.get('/verClientes', controller_Ventas.crearVenta);
 
 
