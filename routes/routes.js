@@ -3,6 +3,9 @@ const router = Router();
 let controller_User = require('../controllers/control-User');
 let controller_Ventas = require('../controllers/control-Ventas')
 
+let controller_Cliente = require('../controllers/control-Cliente');
+
+
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -17,9 +20,9 @@ router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 
 //cliente
 
-router.post('/createCliente', controller_Ventas.crearVenta);
-router.post('/mensajeMasivo', controller_Ventas.crearVenta);
-router.get('/verClientes', controller_Ventas.crearVenta);
+router.post('/createCliente', controller_Cliente.crearCliente);
+// router.post('/mensajeMasivo', controller_Ventas.crearVenta);
+// router.get('/verClientes', controller_Ventas.crearVenta);
 
 
 
