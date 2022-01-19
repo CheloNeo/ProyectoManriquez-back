@@ -23,13 +23,20 @@ controller.crearCliente = (req, res) => {
 controller.mensajeMasivo = async (req,res)=>{
 
     const {asunto, mensaje} = req.body;
-
+    var clientes= [];
     try {
 
         //primero traemos los correos de los clientes de nuestro sistema
         
-
-
+        Cliente.find({},{"correo":1}).exec()
+        .then((data)=>{
+            data.forEach(cliente=>{
+                clientes.push(cliente.correo);
+            })
+        })
+        .catch((err)=>{
+           res.json({status:500,mensaje:"no se pudieron rescatar los correos de los usuarios"})
+        })
 
 
 
@@ -46,7 +53,7 @@ controller.mensajeMasivo = async (req,res)=>{
     
         let info = await transporter.sendMail({
             from: '"Pisos Manriquez " <maemguitarra@gmail.com>', // sender address
-            to: ['juan.larenas@alumnos.uv.cl','marcelo.estay@alumnos.uv.cl'], // list of receivers
+            to: clientes, // list of receivers
             subject: `${asunto}`, // Subject line
             text: "", // plain text body
             html: `${mensaje}` // html body
@@ -55,15 +62,20 @@ controller.mensajeMasivo = async (req,res)=>{
     } catch (error) {
         res.json({status:500,mensaje:"el mensaje tuvo fallas al momento de enviar intente mas tarde!"})
 }}
+
+
+
 controller.verClientes = async (req, res) => {
+    //se le solicita a mongo todos los clientes
+    //mongo responde y la respuesta lleva estado y array de clientes
     try {
         const clientes = await Cliente.find();
         console.log(clientes);
-        res.status(200).json(clientes);
+        res.status(200).json({status:200,clientes: clientes});
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            msg: "Hable con el administrador"
+            mensaje: "Hable con el administrador"
         })
 
     }
