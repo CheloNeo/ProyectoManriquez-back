@@ -12,6 +12,6 @@ router.delete('/delete/:rut',controller_User.deleteUsuario);
 //ventas
 router.post('/newGuiaDeVenta', controller_Ventas.crearVenta);
 // router.post('/newOrdenDeCompra',controller_Ventas);
-// router.get('/filtrarVenta/:id',controller_Ventas);
-// router.get('/verificarEstado/:id', controller_Ventas);
+router.get('/filtrarVenta/:id',controller_Ventas.filtrarVenta);
+router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 module.exports = router;
