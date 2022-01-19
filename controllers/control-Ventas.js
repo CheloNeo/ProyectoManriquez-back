@@ -33,6 +33,25 @@ controller.crearOrden = (req,res)=>{
 
 }
 
+controller.filtrarVenta = async (req, res)=>{
+    await Venta.findOne({"id_Venta":req.params.id}).exec()
+    .then((data)=>{
+        if(data == null){
+            res.json({msg: "venta no encontrada"})
+        }
+        res.json(data);
+    }).catch((err)=>{
+        res.json({msg: "Id no es numerico"})
+    })
+}
+controller.verificarEstado = async (req, res)=>{
+    await Venta.findOne({"id_Venta":req.params.id}).exec()
+    .then((data)=>{
+        res.json({estado:data.estado})
+    }).catch((err)=>{
+        res.json({msg: "Venta no encontrado"})
+    })
+}
 
 
 
