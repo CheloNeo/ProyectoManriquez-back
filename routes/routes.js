@@ -14,4 +14,14 @@ router.post('/newGuiaDeVenta', controller_Ventas.crearVenta);
 router.post('/newOrdenDeCompra',controller_Ventas.crearOrden);
 router.get('/filtrarVenta/:id',controller_Ventas.filtrarVenta);
 router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
+
+//cliente
+
+router.post('/createCliente', controller_Ventas.crearVenta);
+router.post('/mensajeMasivo', controller_Ventas.crearVenta);
+router.get('/verClientes', controller_Ventas.crearVenta);
+
+
+
+
 module.exports = router;
