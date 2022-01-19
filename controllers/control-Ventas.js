@@ -1,8 +1,19 @@
 let controller = {}
-let venta = require('../models/Ventas');
+let Venta = require('../models/Ventas');
 
 controller.crearVenta = (req,res)=>{
-    console.log(req.body)
+    const venta = new Venta(req.body);
+    venta.id_Venta = Date.now();
+    venta.fecha = Date.now();
+    
+    venta.save()
+    .then((data)=>{
+        res.json({status:200,mensaje:"Ingresado con exito"});
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Ingreso fallido revisa los campos"});
+    })
+
 }
 
 
