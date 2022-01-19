@@ -24,7 +24,7 @@ controller.filtrarVenta = async (req, res)=>{
         }
         res.json(data);
     }).catch((err)=>{
-        res.json({msg: "ID no es numerico"})
+        res.json({msg: "Id no es numerico"})
     })
 }
 controller.verificarEstado = async (req, res)=>{
