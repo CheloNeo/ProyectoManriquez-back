@@ -29,6 +29,7 @@ router.get('/verClientes', controller_Cliente.verClientes);
 router.post('/createProveedor',controller_Proveedor.crearProveedor);
 router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
+router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
 
 
