@@ -80,4 +80,18 @@ controller.ListarProveedores = (req,res)=>{
     }
 }
 
+//modificar proveedor
+
+controller.modificarProveedor = async (req, res)=>{
+    const proveedorOriginal = await Proveedor.updateOne({_id:req.params.id},{$set:{
+        nombre:req.body.nombre,
+        direccion:req.body.direccion,
+        fono:req.body.fono,
+        atencion:req.body.atencion,
+        detalle:req.body.detalle,    
+    }})
+    res.json({status:200, msg: "Cambios Realizados con exito"})
+    
+}
+
 module.exports = controller
