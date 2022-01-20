@@ -70,11 +70,12 @@ controller.verClientes = async (req, res) => {
     //mongo responde y la respuesta lleva estado y array de clientes
     try {
         const clientes = await Cliente.find();
-        console.log(clientes);
-        res.status(200).json({status:200,clientes: clientes});
+        // console.log(clientes);
+        res.json({status:200,clientes: clientes});
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        res.json({
+            status:500,
             mensaje: "Hable con el administrador"
         })
 
