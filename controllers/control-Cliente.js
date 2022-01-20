@@ -57,14 +57,16 @@ controller.mensajeMasivo = async (req, res) => {
     }
 }
 controller.verClientes = async (req, res) => {
+    //se le solicita a mongo todos los clientes
+    //mongo responde y la respuesta lleva estado y array de clientes
     try {
         const clientes = await Cliente.find();
         console.log(clientes);
-        res.status(200).json(clientes);
+        res.status(200).json({status:200,clientes: clientes});
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            msg: "Hable con el administrador"
+            mensaje: "Hable con el administrador"
         })
 
     }
