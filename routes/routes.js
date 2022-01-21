@@ -4,7 +4,7 @@ let controller_User = require('../controllers/control-User');
 let controller_Ventas = require('../controllers/control-Ventas');
 let controller_Proveedor = require('../controllers/control-Proveedor');
 let controller_Cliente = require('../controllers/control-Cliente');
-
+let controller_History = require('../controllers/control-History');
 
 //login
 router.post('/new', controller_User.creacionUser);
@@ -31,6 +31,7 @@ router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
 router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
+router.post('/addVenta/:rut',controller_History.addVenta);
 
 
 module.exports = router;
