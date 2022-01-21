@@ -31,7 +31,8 @@ router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
 router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
+//history
 router.post('/addVenta/:rut',controller_History.addVenta);
-
+router.get('/getHistory/:rut',controller_History.traerHistoria);
 
 module.exports = router;
