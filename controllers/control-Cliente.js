@@ -53,7 +53,14 @@ controller.verClientes = async (req, res) => {
     //se le solicita a mongo todos los clientes
     //mongo responde y la respuesta lleva estado y array de clientes
     try {
-        const clientes = await Cliente.find();
+        const clientes = await Cliente.find({},{
+            nombre: 1,
+            apellidos: 1,
+            direccion: 1,
+            telefono: 1,
+            correo: 1,
+            rut: 1,
+        });
         // console.log(clientes);
         res.json({status:200,clientes: clientes});
     } catch (error) {
