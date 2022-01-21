@@ -2,8 +2,8 @@ const { Router } = require('express');
 const router = Router();
 let controller_User = require('../controllers/control-User');
 let controller_Ventas = require('../controllers/control-Ventas');
-let controller_Productos = require('../controllers/control-Productos');
-let controller_Categoria = require('../controllers/control-Categoria');
+let controller_Proveedor = require('../controllers/control-Proveedor');
+let controller_Cliente = require('../controllers/control-Cliente');
 
 
 //login
@@ -18,13 +18,19 @@ router.post('/newOrdenDeCompra',controller_Ventas.crearOrden);
 router.get('/filtrarVenta/:id',controller_Ventas.filtrarVenta);
 router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 
-//productos
-router.post('/newProducto', controller_Productos.crearProducto);
-router.put('/modificarProducto/:id', controller_Productos.modificarProducto);
-router.delete('/eliminarProducto/:id', controller_Productos.eliminarProducto);
+//cliente
 
-//categorias
-router.post('/newCategoria', controller_Categoria.crearCategoria);
-router.put('/modificarCategoria/:id',  controller_Categoria.modificarCategoria);
-router.delete('/eliminarCategoria/:id', controller_Categoria.eliminarCategoria);
+router.post('/createCliente', controller_Cliente.crearCliente);
+router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
+router.get('/verClientes', controller_Cliente.verClientes);
+
+//proveedor
+
+router.post('/createProveedor',controller_Proveedor.crearProveedor);
+router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
+router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
+router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
+
+
+
 module.exports = router;
