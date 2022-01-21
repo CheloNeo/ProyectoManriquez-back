@@ -27,13 +27,6 @@ controller.mensajeMasivo = async (req, res) => {
     try {
 
         //primero traemos los correos de los clientes de nuestro sistema
-
-
-
-
-
-
-
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 465,
