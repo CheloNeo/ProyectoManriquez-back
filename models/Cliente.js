@@ -6,6 +6,7 @@ const ClienteSchema = Schema({
     telefono: String,
     correo: String,
     rut: String,
+    
 });
 
 
