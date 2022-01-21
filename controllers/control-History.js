@@ -1,3 +1,5 @@
+const Cliente = require("../models/Cliente");
+
 const controll = {}
 const { request } = require('express');
 const Cliente = require('../models/Cliente');//importamos el modelo de cliente
@@ -36,5 +38,22 @@ controll.addVenta = async (req = request ,res)=>{
 
 }
 
+controll.traerHistoria = async(req, res)=>{
+    const rut = req.params.rut;
+    try {
+        const cliente = await Cliente.findOne({rut},
+            {historial: 1});
+        res.json({
+            status:200,
+            cliente: cliente
+        });
+    } catch (error) {
+        console.log(error)
+        res.json({
+            status: 500,
+            mensaje: "Hable con el administrador"
+        })
+    }
+}
 
 module.exports = controll
