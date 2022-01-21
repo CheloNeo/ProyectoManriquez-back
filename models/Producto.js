@@ -3,6 +3,7 @@ const ProductoSchema = Schema({
     nombre: String,
     valor: Number,
     descripcion: String,
+    categoria:String,
 });
 
 
