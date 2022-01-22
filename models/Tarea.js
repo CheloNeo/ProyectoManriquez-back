@@ -4,6 +4,7 @@ const tareaSchema = Schema({
     nombre : String ,
     descripcion : String , 
     fecha: Number,
+    estado: String,
 
 });
 

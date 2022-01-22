@@ -32,6 +32,7 @@ router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);
+router.put('/modificarTarea/:id',controller_tarea.modifyTarea);
 
 
 module.exports = router;
