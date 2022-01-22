@@ -19,7 +19,7 @@ controller.addTarea = (req = request ,res = response)=>{
 //modificar tarea
 
 controller.modifyTarea = async (req = request ,res = response)=>{
-    const tareaOriginal = await Tarea.updateOne({_id:req.params._id},{
+    const tareaOriginal = await Tarea.updateOne({_id:req.params.id},{
         $set:{
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
@@ -39,4 +39,17 @@ controller.modifyTarea = async (req = request ,res = response)=>{
         })
     })
 }
+
+
+//eliminar tarea
+controller.deleteTarea = async (req = request , res = response)=>{
+    await Tarea.findByIdAndDelete(req.params._id)
+    .then(()=>{
+        res.json({status:200,mensaje:"Tarea Eliminada"});
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"No se elimino la cuestion!"});
+    })
+}
+
 module.exports = controller;
