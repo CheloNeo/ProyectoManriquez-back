@@ -22,6 +22,7 @@ router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 router.post('/createCliente', controller_Cliente.crearCliente);
 router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
 router.get('/verClientes', controller_Cliente.verClientes);
+router.get('/getCliente/estadistica',controller_Cliente.getCliente_Estadistica);
 
 //proveedor
 router.post('/createProveedor',controller_Proveedor.crearProveedor);

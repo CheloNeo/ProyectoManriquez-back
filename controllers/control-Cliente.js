@@ -7,6 +7,7 @@ const Cliente = require('../models/Cliente');
 
 controller.crearCliente = (req, res) => {
     try {
+        
         const cliente = new Cliente(req.body);
         cliente.save()
             .then((data) => {
@@ -70,6 +71,18 @@ controller.verClientes = async (req, res) => {
             mensaje: "Hable con el administrador"
         })
 
+    }
+}
+
+controller.getCliente_Estadistica = async (req,res)=>{
+    try {
+        await Cliente.find({},{
+            _id:0,
+            nombre:1,
+            totalDeCompra:1
+        }).then((data)=>{ res.json({status:200,clientes: data});})
+    } catch (error) {
+        console.log(error)
     }
 }
 
