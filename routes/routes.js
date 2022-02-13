@@ -32,17 +32,14 @@ router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
 router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
-<<<<<<< HEAD
 
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);
 router.put('/modificarTarea/:id',controller_tarea.modifyTarea);
 router.delete('/eliminarTarea/:id',controller_tarea.deleteTarea);
 
-=======
 //history
 router.post('/addVenta/:rut',controller_History.addVenta);
 router.get('/getHistory/:rut',controller_History.traerHistoria);
->>>>>>> a683c97913fb5c6cc63b6c2d4b63d39b903f2016
 
 module.exports = router;
