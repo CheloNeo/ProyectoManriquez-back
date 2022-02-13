@@ -41,7 +41,7 @@ app.set('port', process.env.PORT || 4000);
 
 //SERVIDOR
 app.listen(app.get('port'),()=>{
-    console.log("Esta corriendo en el servidor",app.get('port'));
+    console.log("Esta corriendo en el puerto",app.get('port'));
 });
 
 

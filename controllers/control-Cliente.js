@@ -86,4 +86,27 @@ controller.getCliente_Estadistica = async (req,res)=>{
     }
 }
 
+
+controller.searchCliente = async(req,res)=>{
+    const rut = req.params.rut
+    try {
+        await Cliente.findOne({rut})
+        .then((data)=>{
+            if(data==null){
+                res.json({
+                    status:400,
+                    data:data
+                })
+            }
+            else{
+                res.json({
+                    status:200,
+                    data:data
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = controller;

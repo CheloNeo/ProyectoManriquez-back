@@ -23,6 +23,7 @@ router.post('/createCliente', controller_Cliente.crearCliente);
 router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
 router.get('/verClientes', controller_Cliente.verClientes);
 router.get('/getCliente/estadistica',controller_Cliente.getCliente_Estadistica);
+router.get('/search/cliente/:rut',controller_Cliente.searchCliente)
 
 //proveedor
 router.post('/createProveedor',controller_Proveedor.crearProveedor);
