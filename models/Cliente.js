@@ -25,6 +25,7 @@ const ClienteSchema = Schema({
                     nombre: String,
                     valor: Number,
                     descripcion: String,
+                    cantidad:Number,
                 }
             ]
             , //son objectos de productos

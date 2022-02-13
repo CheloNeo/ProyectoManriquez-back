@@ -5,10 +5,9 @@ let nodemailer = require('nodemailer');
 //modelo cliente
 const Cliente = require('../models/Cliente');
 
-controller.crearCliente = (req, res) => {
+controller.crearCliente = async (req, res) => {
     try {
-        
-        const cliente = new Cliente(req.body);
+        const cliente = await new Cliente(req.body);
         cliente.save()
             .then((data) => {
                 res.json({ status: 200, mensaje: "cliente creado con exito!" });
