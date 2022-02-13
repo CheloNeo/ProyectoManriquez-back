@@ -29,7 +29,8 @@ const VentaSchema = Schema({
     , //son objectos de productos
     fecha: Number, //valor automatico en hora minuto segundo y fecha
     servicios: String,
-    porcentaje: Number
+    porcentaje: Number,
+    totalDeVenta:Number,
 });
 
 

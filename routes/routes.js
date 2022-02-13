@@ -18,6 +18,7 @@ router.post('/newGuiaDeVenta', controller_Ventas.crearVenta);
 router.post('/newOrdenDeCompra',controller_Ventas.crearOrden);
 router.get('/filtrarVenta/:id',controller_Ventas.filtrarVenta);
 router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
+router.get('/get/ventas',controller_Ventas.getVenta);
 
 //cliente
 router.post('/createCliente', controller_Cliente.crearCliente);
