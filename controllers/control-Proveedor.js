@@ -90,7 +90,7 @@ controller.modificarProveedor = async (req, res)=>{
         atencion:req.body.atencion,
         detalle:req.body.detalle,    
     }})
-    res.json({status:200, msg: "Cambios Realizados con exito"})
+    res.json({status:200, mensaje: "Cambios Realizados con exito"})
     
 }
 

@@ -53,6 +53,17 @@ controller.verificarEstado = async (req, res)=>{
     })
 }
 
+controller.getVenta = async (req,res)=>{
+    try {
+        await Venta.find({},{fecha:1,totalDeVenta:1})
+        .then((data)=>{
+            res.json({status:200,data:data})
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 module.exports = controller

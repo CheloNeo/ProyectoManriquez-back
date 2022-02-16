@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
 const ClienteSchema = Schema({
     nombre: String,
-    apellidos: String,
     direccion: String,
     telefono: String,
     correo: String,
     rut: String,
+    totalDeCompra:Number,
     historial:
     //historial de compras
     [
@@ -13,7 +13,6 @@ const ClienteSchema = Schema({
             id_Venta: Number, //valor automatico en hora minuto segundo y fecha
             cliente: {
                 nombre: String,
-                apellidos: String,
                 direccion: String,
                 telefono: String,
                 correo: String,

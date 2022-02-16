@@ -73,4 +73,39 @@ controller.verClientes = async (req, res) => {
     }
 }
 
+controller.getCliente_Estadistica = async (req,res)=>{
+    try {
+        await Cliente.find({},{
+            _id:0,
+            nombre:1,
+            totalDeCompra:1
+        }).then((data)=>{ res.json({status:200,clientes: data});})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+controller.searchCliente = async(req,res)=>{
+    const rut = req.params.rut
+    try {
+        await Cliente.findOne({rut})
+        .then((data)=>{
+            if(data==null){
+                res.json({
+                    status:400,
+                    data:data
+                })
+            }
+            else{
+                res.json({
+                    status:200,
+                    data:data
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = controller;
