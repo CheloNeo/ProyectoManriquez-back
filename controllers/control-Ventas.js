@@ -2,6 +2,8 @@ let controller = {}
 const Orden = require('../models/OrdenDeVenta');
 let Venta = require('../models/Ventas');
 
+
+
 controller.crearVenta = (req,res)=>{
     const venta = new Venta(req.body);
     venta.id_Venta = Date.now();
