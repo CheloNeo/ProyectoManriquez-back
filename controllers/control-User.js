@@ -47,7 +47,7 @@ controller.login = async (req,res)=>{
             res.json({status:500,mensaje:"Usuario no encontrado"});
         }
         else{
-            console.log(pass,data.pass)
+            
             bcrypt.compare(pass,data.pass,function(err,result){
                 
                 if(result == true){
