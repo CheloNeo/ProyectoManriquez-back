@@ -4,7 +4,7 @@ const UsuarioSchema = Schema({
         type: String,
         required: true
     },
-    password:{
+    pass:{
         type: String
     },
 });
