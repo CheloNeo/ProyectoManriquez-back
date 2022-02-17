@@ -45,7 +45,7 @@ controller.login = async (req,res)=>{
     await Usuario.findOne({rut})
     .then((data)=>{
         if(data == null){
-            res.json({status:500,mensaje:"Usuario no encontrado"});
+            res.json({status:404,mensaje:"Usuario no encontrado"});
         }
         else{
             
