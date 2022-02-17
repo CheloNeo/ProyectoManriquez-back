@@ -11,7 +11,8 @@ controller.creacionUser = async  (req,res)=>{
     // y guardar el usuario con la contrasena hasheada en la bd, obviamente este no tiene que existir
 
 
-    const {rut,pass} = req.body;
+    const {nombre,rut,email,pass} = req.body;
+    
 
     //buscar si el usuario esta o no en la  BD
     const usuario = await Usuario.findOne({ rut });
@@ -29,7 +30,7 @@ controller.creacionUser = async  (req,res)=>{
         user.save().then((data)=>{
             res.json({status:200,mensaje:"Usuario creado"}); // el usuario es creado exitosamente!
         })
-        .catch((err)=>{res.json({status:500,mensaje:"Error"})})   
+        .catch((err)=>{res.json({status:500,mensaje:"Error en la creacion del usuario"})})   
     }
 }
 
