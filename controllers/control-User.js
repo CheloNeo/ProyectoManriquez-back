@@ -11,7 +11,8 @@ controller.creacionUser = async  (req,res)=>{
     // y guardar el usuario con la contrasena hasheada en la bd, obviamente este no tiene que existir
 
 
-    const {rut,password} = req.body;
+    const {nombre,rut,email,pass} = req.body;
+    
 
     //buscar si el usuario esta o no en la  BD
     const usuario = await Usuario.findOne({ rut });
@@ -24,12 +25,12 @@ controller.creacionUser = async  (req,res)=>{
     else{
         var user = new Usuario(req.body);//creamos un usuario nuevo
         const salt = bcrypt.genSaltSync();
-        user.password = bcrypt.hashSync(password, salt);
+        user.pass = bcrypt.hashSync(pass, salt);
 
         user.save().then((data)=>{
             res.json({status:200,mensaje:"Usuario creado"}); // el usuario es creado exitosamente!
         })
-        .catch((err)=>{res.json({status:500,mensaje:"Error"})})   
+        .catch((err)=>{res.json({status:500,mensaje:"Error en la creacion del usuario"})})   
     }
 }
 
@@ -39,14 +40,16 @@ controller.creacionUser = async  (req,res)=>{
 controller.login = async (req,res)=>{
     // se debe enviar un usuario buscarlo en la base de datos
     // y devolver true si esta y en caso contrario false
-    const {rut,password} = req.body;
+    const {rut,pass} = req.body;
+    console.log(rut,pass)
     await Usuario.findOne({rut})
     .then((data)=>{
         if(data == null){
             res.json({status:500,mensaje:"Usuario no encontrado"});
         }
         else{
-            bcrypt.compare(password,data.password,function(err,result){
+            
+            bcrypt.compare(pass,data.pass,function(err,result){
                 
                 if(result == true){
                     res.json(generarToken())
