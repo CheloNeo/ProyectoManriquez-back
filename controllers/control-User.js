@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require("jsonwebtoken");
 const { generarToken } = require("../helpers/create-token");
+let nodemailer = require('nodemailer');
 
 
 controller.creacionUser = async  (req,res)=>{
@@ -65,19 +66,20 @@ controller.login = async (req,res)=>{
 
 
 
-controller.validateToken =  (req, res)=>{
+controller.validateToken = async (req, res)=>{
 
     // este metodo esta creado para poder validar un token es decir 
     // cuando un usuario esta en la web con un token no expirado o expirado
 
-    const {token } = req.body;
+    const {token} = req.body;
+    
     try {
         const validation = jwt.verify(token, process.env.SECRET_KEY)
-        const respuesta =  generarToken();
+        const respuesta =   generarToken();
         res.send(respuesta);
 
         
-    } catch (error) {
+    } catch (error) {   
         console.log(error)
         res.json({status:500,mensaje:"Ingresa nuevamente, ingreso invalido"})
     }
@@ -102,5 +104,47 @@ controller.deleteUsuario = (req,res)=>{
         res.json({status:500, mensaje:"error"});
     })
 }
+
+controller.sendMail = async (req,res)=>{
+    const {rut,pass} = req.body;
+    await Usuario.findOne({rut})
+    .then((data)=>{
+       if(data.email == pass){
+
+        var aux  = generarToken()
+        var largo = aux.mensaje.substring(115,123)
+        
+   
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: 'maemguitarra@gmail.com', // usuario de correo
+                pass: 'snshioiwejtyenwq', // clave de acceso a gmail
+            },
+        });
+        let info = transporter.sendMail({
+            from: '"Pisos Manriquez " <maemguitarra@gmail.com>', // sender address
+            to: [`${pass}`], // list of receivers
+            subject: `Solicitud cambio de contraseña`, // Subject line
+            text: "", // plain text body
+            html: `<h1>Solcitud cambio de contraseña</h1>
+            <p>Debido a que nos solicito un cambio de contraseña 
+                le enviamos esta codigo que debe ingresar en nuestro sistema                 para poder obtener su nueva contraseña.
+            </p>
+            <h3>Codigo: &nbsp;${largo} </h3>` // html body
+        });
+        res.json({status:200,mensaje:"Correo Enviado con exito!"})
+
+       }
+       else{
+        res.json({status:500,mensaje:"Usuario no encontrado!"})
+       }
+    })
+
+}
+
+
 
 module.exports = controller;

@@ -12,6 +12,7 @@ router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
 router.post('/validate', controller_User.validateToken);
 router.delete('/delete/:rut',controller_User.deleteUsuario);
+router.post('/sendMail',controller_User.sendMail);
 
 //ventas
 router.post('/newGuiaDeVenta', controller_Ventas.crearVenta);
