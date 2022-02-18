@@ -16,6 +16,9 @@ const UsuarioSchema = Schema({
         type: String,
         required: true
     },
+    validacion:{
+        type:String
+    },
 
 });
 
