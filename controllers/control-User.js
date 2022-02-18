@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario');
 const jwt = require("jsonwebtoken");
 const { generarToken } = require("../helpers/create-token");
+let nodemailer = require('nodemailer');
 
 
 controller.creacionUser = async  (req,res)=>{
@@ -11,7 +12,7 @@ controller.creacionUser = async  (req,res)=>{
     // y guardar el usuario con la contrasena hasheada en la bd, obviamente este no tiene que existir
 
 
-    const {nombre,rut,email,pass} = req.body;
+    const {nombre,rut,email,pass,validacion} = req.body;
     
 
     //buscar si el usuario esta o no en la  BD
@@ -65,19 +66,20 @@ controller.login = async (req,res)=>{
 
 
 
-controller.validateToken =  (req, res)=>{
+controller.validateToken = async (req, res)=>{
 
     // este metodo esta creado para poder validar un token es decir 
     // cuando un usuario esta en la web con un token no expirado o expirado
 
-    const {token } = req.body;
+    const {token} = req.body;
+    
     try {
         const validation = jwt.verify(token, process.env.SECRET_KEY)
-        const respuesta =  generarToken();
+        const respuesta =   generarToken();
         res.send(respuesta);
 
         
-    } catch (error) {
+    } catch (error) {   
         console.log(error)
         res.json({status:500,mensaje:"Ingresa nuevamente, ingreso invalido"})
     }
@@ -103,4 +105,72 @@ controller.deleteUsuario = (req,res)=>{
     })
 }
 
+controller.sendMail = async (req,res)=>{
+    const {rut,pass} = req.body; //pass es un mail
+    await Usuario.findOne({rut})
+    .then((data)=>{
+       if(data.email == pass){
+
+        var aux  = generarToken()
+        var largo = aux.mensaje.substring(115,123)
+        
+        // conexion con smtp gmail
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: 'maemguitarra@gmail.com', // usuario de correo
+                pass: 'snshioiwejtyenwq', // clave de acceso a gmail
+            },
+        });
+
+        // envio del correo
+        let info = transporter.sendMail({
+            from: '"Pisos Manriquez " <maemguitarra@gmail.com>', // sender address
+            to: [`${pass}`], // list of receivers
+            subject: `Solicitud cambio de contraseña`, // Subject line
+            text: "", // plain text body
+            html: `<h1>Solcitud cambio de contraseña</h1>
+            <p>Debido a que nos solicito un cambio de contraseña 
+                le enviamos esta codigo que debe ingresar en nuestro sistema                 para poder obtener su nueva contraseña.
+            </p>
+            <h3>Codigo: &nbsp;${largo} </h3>` // html body
+        });
+        res.json({status:200,mensaje:"Correo Enviado con exito!"})
+
+       }
+       else{
+        res.json({status:500,mensaje:"Usuario no encontrado!"})
+       }
+    })
+
+}
+
+controller.sendCodigo = async (req,res)=>{
+    const{rut,codigo}=req.body;
+    await Usuario.findOneAndUpdate({"validacion":codigo})
+    .then(()=>{
+        res.json({status:200,mensaje:"Codigo correcto!"})
+    })
+    .catch(()=>{
+        res.json({status:500,mensaje:"Codigo invalido!"})
+    })
+}
+
+
+controller.modifyPass = async (req,res)=>{
+    const{rut,pass}= req.body;
+    const salt = bcrypt.genSaltSync();
+    passEncrypt= bcrypt.hashSync(pass, salt);
+
+    await Usuario.findOneAndUpdate({"pass":passEncrypt})
+    .then(()=>{
+        res.json({status:200,mensaje:"contraseña modificada con exito!"})
+    })
+    .catch(()=>{
+        res.json({status:500,mensaje:"la contraseña no se pudo modificar"})
+    })
+
+}
 module.exports = controller;
