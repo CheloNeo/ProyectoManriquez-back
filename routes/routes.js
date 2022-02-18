@@ -7,7 +7,7 @@ let controller_Cliente = require('../controllers/control-Cliente');
 let controller_tarea = require('../controllers/control-Tareas');
 let controller_History = require('../controllers/control-History');
 let controller_Product = require('../controllers/control-Productos')
-
+let controller_categoria = require('../controllers/control-Categoria')
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -41,7 +41,8 @@ router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 router.post('/newProduct', controller_Product.crearProducto);
 router.post('/modifyProduct',controller_Product.modificarProducto);
 router.delete('/delete/:id',controller_Product.eliminarProducto);
-
+router.get('/get/producto',controller_Product.getProductos);
+router.post('/get/producto/category',controller_Product.getForCategory);
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);
 router.put('/modificarTarea/:id',controller_tarea.modifyTarea);
@@ -50,6 +51,14 @@ router.delete('/eliminarTarea/:id',controller_tarea.deleteTarea);
 //history
 router.post('/addVenta/:rut',controller_History.addVenta);
 router.get('/getHistory/:rut',controller_History.traerHistoria);
+
+
+//categorias
+router.post('/add/categoria',controller_categoria.crearCategoria)
+router.post('/modify/categoria/:id',controller_categoria.modificarCategoria)
+router.post('/delete/categoria/:id',controller_categoria.eliminarCategoria)
+router.get('/get/categoria',controller_categoria.getCategoria)
+
 
 
 module.exports = router;
