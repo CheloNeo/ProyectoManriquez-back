@@ -12,7 +12,7 @@ controller.creacionUser = async  (req,res)=>{
     // y guardar el usuario con la contrasena hasheada en la bd, obviamente este no tiene que existir
 
 
-    const {nombre,rut,email,pass} = req.body;
+    const {nombre,rut,email,pass,validacion} = req.body;
     
 
     //buscar si el usuario esta o no en la  BD
@@ -106,7 +106,7 @@ controller.deleteUsuario = (req,res)=>{
 }
 
 controller.sendMail = async (req,res)=>{
-    const {rut,pass} = req.body;
+    const {rut,pass} = req.body; //pass es un mail
     await Usuario.findOne({rut})
     .then((data)=>{
        if(data.email == pass){
@@ -114,7 +114,7 @@ controller.sendMail = async (req,res)=>{
         var aux  = generarToken()
         var largo = aux.mensaje.substring(115,123)
         
-   
+        // conexion con smtp gmail
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 465,
@@ -124,6 +124,8 @@ controller.sendMail = async (req,res)=>{
                 pass: 'snshioiwejtyenwq', // clave de acceso a gmail
             },
         });
+
+        // envio del correo
         let info = transporter.sendMail({
             from: '"Pisos Manriquez " <maemguitarra@gmail.com>', // sender address
             to: [`${pass}`], // list of receivers
@@ -145,6 +147,30 @@ controller.sendMail = async (req,res)=>{
 
 }
 
+controller.sendCodigo = async (req,res)=>{
+    const{rut,codigo}=req.body;
+    await Usuario.findOneAndUpdate({"validacion":codigo})
+    .then(()=>{
+        res.json({status:200,mensaje:"Codigo correcto!"})
+    })
+    .catch(()=>{
+        res.json({status:500,mensaje:"Codigo invalido!"})
+    })
+}
 
 
+controller.modifyPass = async (req,res)=>{
+    const{rut,pass}= req.body;
+    const salt = bcrypt.genSaltSync();
+    passEncrypt= bcrypt.hashSync(pass, salt);
+
+    await Usuario.findOneAndUpdate({"pass":passEncrypt})
+    .then(()=>{
+        res.json({status:200,mensaje:"contraseña modificada con exito!"})
+    })
+    .catch(()=>{
+        res.json({status:500,mensaje:"la contraseña no se pudo modificar"})
+    })
+
+}
 module.exports = controller;
