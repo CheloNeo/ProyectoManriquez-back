@@ -7,6 +7,7 @@ const ProductoSchema = Schema({
     stock:Number,
     vecesComprado:Number,
     color:String,
+    imagen:String,
 });
 
 
