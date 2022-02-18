@@ -6,7 +6,8 @@ let controller_Proveedor = require('../controllers/control-Proveedor');
 let controller_Cliente = require('../controllers/control-Cliente');
 let controller_tarea = require('../controllers/control-Tareas');
 let controller_History = require('../controllers/control-History');
-let controller_Producto = require('../controllers/control-Productos')
+let controller_Product = require('../controllers/control-Productos')
+
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -36,6 +37,10 @@ router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
 router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 
+//producto
+router.post('/newProduct', controller_Product.crearProducto);
+router.post('/modifyProduct',controller_Product.modificarProducto);
+router.delete('/delete/:id',controller_Product.eliminarProducto);
 
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);

@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
 const ProductoSchema = Schema({
     nombre: String,
-    valor: Number,
+    precio: Number,
     descripcion: String,
-    categoria:String,
+    color:String,
     stock:Number,
-    vecesComprado:Number,
+    categoria:String,
 });
 
 

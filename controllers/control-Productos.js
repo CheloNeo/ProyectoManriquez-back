@@ -29,9 +29,12 @@ controller.modificarProducto = async (req, res) => {
             _id: req.params.id,
             $set: {
                 nombre: req.body.nombre,
-                valor: req.body.valor,
+                precio: req.body.valor,
                 descripcion: req.body.descripcion,
+                color: req.body.color,
+                stock: req.body.stock,
                 categoria: req.body.categoria,
+                imagen: req.body.imagen
             }
         });
         res.json({
