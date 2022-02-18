@@ -41,7 +41,7 @@ router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
 router.post('/newProduct', controller_Product.crearProducto);
 router.post('/modifyProduct',controller_Product.modificarProducto);
 router.delete('/delete/:id',controller_Product.eliminarProducto);
-
+router.get('/get/producto',controller_Product.getProductos);
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);
 router.put('/modificarTarea/:id',controller_tarea.modifyTarea);
