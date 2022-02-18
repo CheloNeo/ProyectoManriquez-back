@@ -133,7 +133,7 @@ controller.sendMail = async (req,res)=>{
             text: "", // plain text body
             html: `<h1>Solcitud cambio de contraseña</h1>
             <p>Debido a que nos solicito un cambio de contraseña 
-                le enviamos esta codigo que debe ingresar en nuestro sistema                 para poder obtener su nueva contraseña.
+                le enviamos este codigo que debe ingresar en nuestro sistema para poder obtener su nueva contraseña.
             </p>
             <h3>Codigo: &nbsp;${largo} </h3>` // html body
         });
