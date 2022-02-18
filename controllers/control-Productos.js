@@ -24,31 +24,32 @@ controller.crearProducto = (req, res) => {
 //Modificar Producto
 
 controller.modificarProducto = async (req, res) => {
-    try {
-        const productoOriginal = await Producto.updateOne({
-            _id: req.params.id,
-            $set: {
-                nombre: req.body.nombre,
-                precio: req.body.valor,
-                descripcion: req.body.descripcion,
-                color: req.body.color,
-                stock: req.body.stock,
-                categoria: req.body.categoria,
-                imagen: req.body.imagen
-            }
-        });
-        res.json({
-            status: 200,
-            mensaje: "Acutalizado con exito"
+    console.log(req.body)
+    // try {
+    //     const productoOriginal = await Producto.updateOne({
+    //         _id: req.params.id,
+    //         $set: {
+    //             nombre: req.body.nombre,
+    //             precio: req.body.valor,
+    //             descripcion: req.body.descripcion,
+    //             color: req.body.color,
+    //             stock: req.body.stock,
+    //             categoria: req.body.categoria,
+    //             imagen: req.body.imagen
+    //         }
+    //     });
+    //     res.json({
+    //         status: 200,
+    //         mensaje: "Acutalizado con exito"
             
-        })
-    } catch (error) {
-        res.json({
-            status: 500,
-            mensaje: "Error en el sistema"
+    //     })
+    // } catch (error) {
+    //     res.json({
+    //         status: 500,
+    //         mensaje: "Error en el sistema"
             
-        })
-    }
+    //     })
+    // }
 
 }
 
