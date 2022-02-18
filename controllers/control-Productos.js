@@ -87,4 +87,18 @@ controller.getProductos= async(req,res)=>{
         console.log(err)
     })
 }
+
+
+controller.getForCategory = async (req,res) =>{
+    const{ data } = req.body
+    
+    await Producto.find({categoria:data}).exec()
+    .then((data)=>{
+     
+        res.json(data)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
 module.exports = controller

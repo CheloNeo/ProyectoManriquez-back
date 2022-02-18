@@ -63,4 +63,15 @@ controller.eliminarCategoria = (req, res)=>{
         })
     })
 }
+
+
+controller.getCategoria = async(req,res)=>{
+    await Categoria.find()
+    .then((data)=>{
+        res.json(data)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
 module.exports = controller
