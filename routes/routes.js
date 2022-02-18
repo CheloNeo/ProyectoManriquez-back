@@ -51,6 +51,5 @@ router.delete('/eliminarTarea/:id',controller_tarea.deleteTarea);
 router.post('/addVenta/:rut',controller_History.addVenta);
 router.get('/getHistory/:rut',controller_History.traerHistoria);
 
-router.post('/add/producto',controller_Producto.crearProducto)
-router.get('/get/producto',controller_Producto.getProductos)
+
 module.exports = router;
