@@ -4,6 +4,8 @@ const ProductoSchema = Schema({
     valor: Number,
     descripcion: String,
     categoria:String,
+    stock:Number,
+    vecesComprado:Number,
 });
 
 

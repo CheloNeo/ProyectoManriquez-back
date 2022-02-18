@@ -6,7 +6,7 @@ let controller_Proveedor = require('../controllers/control-Proveedor');
 let controller_Cliente = require('../controllers/control-Cliente');
 let controller_tarea = require('../controllers/control-Tareas');
 let controller_History = require('../controllers/control-History');
-
+let controller_Producto = require('../controllers/control-Productos')
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -46,4 +46,6 @@ router.delete('/eliminarTarea/:id',controller_tarea.deleteTarea);
 router.post('/addVenta/:rut',controller_History.addVenta);
 router.get('/getHistory/:rut',controller_History.traerHistoria);
 
+router.post('/add/producto',controller_Producto.crearProducto)
+router.get('/get/producto',controller_Producto.getProductos)
 module.exports = router;

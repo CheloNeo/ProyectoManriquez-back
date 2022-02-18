@@ -72,4 +72,15 @@ controller.eliminarProducto = (req, res)=>{
         })
     })
 }
+
+
+controller.getProductos= async(req,res)=>{
+    await Producto.find()
+    .then((data)=>{
+        res.json(data);
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
 module.exports = controller
