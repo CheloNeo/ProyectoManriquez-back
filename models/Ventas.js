@@ -31,6 +31,7 @@ const VentaSchema = Schema({
     servicios: String,
     porcentaje: Number,
     totalDeVenta:Number,
+    envio:String,
 });
 
 
