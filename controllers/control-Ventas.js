@@ -66,6 +66,26 @@ controller.getVenta = async (req,res)=>{
     }
 }
 
+controller.getVentaComponent = async(req,res)=>{
+    try {
+        await Venta.find({},{
+            cliente:1,
+            estado:1,
+            productos:1,
+            totalDeVenta:1,
+            envio:1,
+
+        }).then((data)=>{
+            res.json(data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 module.exports = controller
