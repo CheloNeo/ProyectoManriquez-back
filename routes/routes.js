@@ -24,6 +24,9 @@ router.get('/filtrarVenta/:id',controller_Ventas.filtrarVenta);
 router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 router.get('/get/ventas/estadistica',controller_Ventas.getVenta);
 router.get('/get/ventas',controller_Ventas.getVentaComponent)
+router.get('/venta/get/list/product/:id',controller_Ventas.getProductForId)
+router.post('/venta/delete/producto',controller_Ventas.deleteproducto)
+router.get('/get/ventas/for/client/:rut',controller_Ventas.getVentaCliente)
 
 //cliente
 router.post('/createCliente', controller_Cliente.crearCliente);
@@ -31,6 +34,7 @@ router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
 router.get('/verClientes', controller_Cliente.verClientes);
 router.get('/getCliente/estadistica',controller_Cliente.getCliente_Estadistica);
 router.get('/search/cliente/:rut',controller_Cliente.searchCliente)
+
 
 //proveedor
 router.post('/createProveedor',controller_Proveedor.crearProveedor);
@@ -44,6 +48,9 @@ router.post('/modifyProduct',controller_Product.modificarProducto);
 router.delete('/delete/:id',controller_Product.eliminarProducto);
 router.get('/get/producto',controller_Product.getProductos);//general
 router.post('/get/producto/category',controller_Product.getForCategory); //estadistica
+
+
+
 //tareas
 router.post('/crearTarea',controller_tarea.addTarea);
 router.put('/modificarTarea/:id',controller_tarea.modifyTarea);

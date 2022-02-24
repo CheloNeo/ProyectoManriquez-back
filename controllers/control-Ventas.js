@@ -1,21 +1,47 @@
 let controller = {}
+const Cliente = require('../models/Cliente');
 const Orden = require('../models/OrdenDeVenta');
+const Ventas = require('../models/Ventas');
 let Venta = require('../models/Ventas');
 
 
 
-controller.crearVenta = (req,res)=>{
+controller.crearVenta = async (req,res)=>{
     const venta = new Venta(req.body);
     venta.id_Venta = Date.now();
     venta.fecha = Date.now();
-    
-    venta.save()
+    rut_cliente = venta.cliente.rut
+    await Cliente.findOne({rut:rut_cliente},{historial:1})
     .then((data)=>{
-        res.json({status:200,mensaje:"Ingresado con exito"});
+        if(data!=null){
+
+            aux = data.historial
+            aux.push(venta)
+            Cliente.findOneAndUpdate({rut:rut_cliente},{$set: {historial:aux} } )
+            .then((data)=>{
+                venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
+            })
+            .catch((err)=>{
+                res.json({status:500,mensaje:"Ingreso no exitoso!"})
+            })
+
+        }
+        else{
+            res.json({status:500,mensaje:"Usuario no encontrado!"})
+        }
+        
     })
-    .catch((err)=>{
-        res.json({status:500,mensaje:"Ingreso fallido revisa los campos"});
-    })
+
+
+
+
+    // venta.save()
+    // .then((data)=>{
+    //     res.json({status:200,mensaje:"Ingresado con exito"});
+    // })
+    // .catch((err)=>{
+    //     res.json({status:500,mensaje:"Ingreso fallido revisa los campos"});
+    // })
 }
 
 controller.crearOrden = (req,res)=>{
@@ -87,5 +113,42 @@ controller.getVentaComponent = async(req,res)=>{
 }
 
 
+controller.getProductForId = async (req,res)=>{
+    const{ id } = req.params
+    try {
+        await Ventas.findOne({_id:id},{_id:0,productos:1})
+        .then((data)=>{
+            res.json(data.productos);
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+controller.deleteproducto = async (req,res)=>{
+    const{aux,idVenta} = req.body;
+    await Venta.findByIdAndUpdate(idVenta,{$set:{productos:aux}})
+    .then((data)=>{
+    
+        res.json({status:200,mensaje:"elemento borrado"})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,mensaje:"Hubo un error"})
+    })
+}
+
+
+controller.getVentaCliente = async (req,res)=>{
+    const {rut} = req.params
+    await Cliente.findOne({rut},{historial:1})
+    .then((data)=>{
+        res.json(data);
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+}
 
 module.exports = controller

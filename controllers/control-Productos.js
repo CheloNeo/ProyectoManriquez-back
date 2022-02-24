@@ -91,11 +91,11 @@ controller.getProductos= async(req,res)=>{
 
 controller.getForCategory = async (req,res) =>{
     const{ data } = req.body
-    
+    console.log(req.body)
     await Producto.find({categoria:data}).exec()
-    .then((data)=>{
-     
-        res.json(data)
+    .then((dataProduct)=>{
+        console.log(dataProduct)
+        res.json(dataProduct)
     })
     .catch((err)=>{
         console.log(err)
