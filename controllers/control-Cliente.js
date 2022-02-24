@@ -55,11 +55,11 @@ controller.verClientes = async (req, res) => {
     try {
         const clientes = await Cliente.find({},{
             nombre: 1,
-            apellidos: 1,
             direccion: 1,
             telefono: 1,
             correo: 1,
             rut: 1,
+            totalDeCompra:1,
         });
         // console.log(clientes);
         res.json({status:200,clientes: clientes});
