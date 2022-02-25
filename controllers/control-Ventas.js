@@ -3,6 +3,7 @@ const Cliente = require('../models/Cliente');
 const Orden = require('../models/OrdenDeVenta');
 const Ventas = require('../models/Ventas');
 let Venta = require('../models/Ventas');
+const router = require('../routes/routes');
 
 
 
@@ -150,5 +151,91 @@ controller.getVentaCliente = async (req,res)=>{
     })
 
 }
+
+controller.modificarEstado = async (req,res)=>{
+    const{aux,rut,idVenta} = req.body;
+    await Ventas.findByIdAndUpdate(idVenta,{$set:{estado:aux}})
+    .then((ventaPermutada)=>{
+        ventaPermutada.estado = aux
+        Cliente.findOne({rut})
+        .then((cliente)=>{
+            var clienteData = cliente; //encontramos al cliente
+            var historial = clienteData.historial; //rescatamos el historial
+            var indexVenta
+            historial.forEach((ventaUnica)=>{
+                if(ventaUnica._id == idVenta){
+                    indexVenta = historial.indexOf(ventaUnica)
+                }
+            })
+            historial[indexVenta] = ventaPermutada
+            Cliente.findOneAndUpdate({rut},{$set:{historial:historial}})
+            .then(()=>{
+                res.json({status:200,mensaje:"Modificacion de estado en venta exitoso!"})
+            })
+            .catch((err)=>{
+                console.log(err)
+
+                res.json({status:500,mensaje:"Error en la actualizacion de historial"})
+            })
+        })
+        .catch((err)=>{
+            console.log(err)
+
+            res.json({status:500,mensaje:"No se encontro el cliente!"})
+        })
+
+        
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,mensaje:"No se encontro la venta :)"})
+    })
+    
+}
+
+controller.deleteVenta = async (req,res)=>{
+    const {rut,id} = req.body;
+
+    //delete venta
+    await Venta.findByIdAndDelete(id)
+    .then((venta)=>{
+        Cliente.findOne({rut})
+        .then((cliente)=>{
+            var historial = cliente.historial;
+            var historialAuxiliar = []
+            var index 
+            historial.forEach((ventaUnica)=>{
+                if(ventaUnica._id != id){
+                  historialAuxiliar.push(ventaUnica);
+                }
+            })
+            
+            Cliente.findOneAndUpdate({rut},{$set:{historial:historialAuxiliar}})
+            .then(()=>{
+                res.json({status:200,mensaje:"Data actualizada"})
+            })
+            .catch((err)=>{
+                console.log(err)
+                res.json({status:500,mensaje:"Data no actualizada"})
+            })
+
+        })
+      
+
+        .catch((err)=>{
+            console.log(err)
+            res.json({status:500,mensaje:"Data no actualizada"})
+        })
+    })
+   
+
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,mensaje:"Data no actualizada"})
+    })
+
+
+}
+
 
 module.exports = controller
