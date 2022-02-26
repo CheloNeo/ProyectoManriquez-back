@@ -198,8 +198,45 @@ controller.eliminarCliente = async (req,res)=>{
     .catch((err)=>{
         res.json({status:500,mensaje:"no fue eliminado!"})
     })
-
+    
 }
 
+controller.calcularTotalVenta = async (req,res)=>{
+    const {rut}= req.body;
+    await Cliente.findOne({rut})
+    .then((cliente)=>{//encontramos el cliente
+        var historial = []; //preparamos el historial para reemplazarlo!
+        var sumaGeneral = 0;
+        //recorremos el historial para sumar todos los valores de total de compra
+        cliente.historial.forEach((ventaUnica)=>{
+            var sumaProductos = 0;
+            ventaUnica.productos.forEach((productos)=>{
+                sumaProductos = sumaProductos + productos.cantidad*productos.valor;
+            })
+            
+            ventaUnica.totalDeVenta = sumaProductos;
+            historial.push(ventaUnica)
+            sumaGeneral = sumaGeneral + sumaProductos
+        })
+
+
+
+        Cliente.findOneAndUpdate({rut},{$set:{totalDeCompra: sumaGeneral,historial:historial}})
+        .then(()=>
+            {
+                res.json({status:200,mensaje:"suma correcta!"})
+            }
+        )
+        .catch((err)=>{
+            console.log(err)
+            res.json({status:500,mensaje:"parece que no sabe sumar je"})
+        })
+
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,mensaje:"parece que no sabe sumar je"})
+    })
+}
 
 module.exports = controller;

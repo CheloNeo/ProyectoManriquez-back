@@ -20,6 +20,15 @@ controller.crearVenta = async (req,res)=>{
             aux.push(venta)
             Cliente.findOneAndUpdate({rut:rut_cliente},{$set: {historial:aux} } )
             .then((data)=>{
+
+                var suma = 0
+                venta.productos.forEach((producto)=>{
+                    suma = suma + producto.cantidad*producto.valor;
+                })
+                venta.totalDeVenta = suma
+
+
+
                 venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
             })
             .catch((err)=>{
@@ -32,17 +41,30 @@ controller.crearVenta = async (req,res)=>{
         }
         
     })
+}
 
 
+controller.actualizarVenta= async (req,res)=>{
+    const{id}=req.body;
 
+    await Ventas.findById(id)
+    .then((venta)=>{
+        var suma = 0;
+        venta.productos.forEach((producto)=>{
+            suma = suma + producto.cantidad * producto.valor
+        })
+        Ventas.findByIdAndUpdate(id,{$set:{totalDeVenta:suma}})
+        .then(()=>{
+            res.json({status:200,mensaje:"Venta actualizada"})
+        })
+        .catch((err)=>{
+            res.json({status:500,mensaje:"Venta no actualizada"})
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Venta no actualizada"})
+    })
 
-    // venta.save()
-    // .then((data)=>{
-    //     res.json({status:200,mensaje:"Ingresado con exito"});
-    // })
-    // .catch((err)=>{
-    //     res.json({status:500,mensaje:"Ingreso fallido revisa los campos"});
-    // })
 }
 
 controller.crearOrden = (req,res)=>{
