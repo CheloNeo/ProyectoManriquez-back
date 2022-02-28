@@ -1,9 +1,11 @@
 let controller = {}
 
+const e = require('express');
 let nodemailer = require('nodemailer');
 
 //modelo cliente
 const Cliente = require('../models/Cliente');
+const Ventas = require('../models/Ventas');
 
 controller.crearCliente = async (req, res) => {
     try {
@@ -108,4 +110,133 @@ controller.searchCliente = async(req,res)=>{
         console.log(error)
     }
 }
+
+controller.searchClienteVentaUnica = async (req,res)=>{
+    const { data , rut }  = req.body;
+    if(rut=='' || data === ''){
+        res.json({status:404,mensaje:"usuario no encontrado!"});
+    }
+    else{
+        try {
+            await Cliente.findOne({rut},{nombre:1,direccion:1,telefono:1,correo:1,rut:1})
+            .then((data1)=>{
+                var cliente = data1
+                
+                Ventas.findById(data,{})
+                .then((dataVenta)=>{
+                   if(dataVenta!=null){
+                        res.json({status:200,data:cliente,dataVenta})
+                   }
+                })
+                .catch((err)=>{
+                    res.json({status:404,mensaje:"usuario no encontrado!"});
+                })
+            })
+            .catch((err)=>{
+                res.json({status:404,mensaje:"usuario no encontrado!"});
+            })
+
+        } catch (error) {
+            
+        }
+    }
+}
+
+
+controller.actualizarCarrito = async (req,res)=>{
+    const {idVenta,rut} = req.body;
+    // idVenta es el id de la venta que hay que busar en el historial del rut
+    // rut persona a la que se le va a modificar su historial
+    // aux es igual a la data que se reemplazara
+
+    await Ventas.findById(idVenta)
+    .then((venta)=>{
+        Cliente.findOne({rut})
+        .then((cliente)=>{
+            var aux = cliente.historial
+            //recorremos el historial para buscar la venta
+            aux.forEach(ventaEnHistorial => {
+                //buscar la venta que es igual a la de nosotros y sacar el indice
+                if(ventaEnHistorial._id == idVenta){
+                    var index = aux.indexOf(ventaEnHistorial)
+                    aux[index] = venta
+                    Cliente.findOneAndUpdate({rut},{$set:{historial:aux}})
+                    .then(()=>{
+                        res.json({status:200,mensaje:"Envio listo"})
+                    })
+                    .catch((err)=>{
+                        res.json({status:500,mensaje:"Envio fallido por modificacion"})
+                    })
+                }
+            });
+        })
+        .catch((err)=>{
+            res.json({status:500,mensaje:"Envio fallido por user"})
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Envio fallido por venta"})
+    })
+
+}
+
+
+controller.eliminarCliente = async (req,res)=>{
+    const {rut}=req.body;
+    
+
+    await Ventas.deleteMany({rut}) //borramos todas las ventas relacionadas
+    .then((data)=>{
+        Cliente.findOneAndDelete({rut}) //borramos el cliente relacionado
+        .then(()=>{
+            res.json({status:200,mensaje:"eliminado exitosamente"})
+        })
+        .catch((err)=>{
+            res.json({status:500,mensaje:"no fue eliminado!"})
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"no fue eliminado!"})
+    })
+    
+}
+
+controller.calcularTotalVenta = async (req,res)=>{
+    const {rut}= req.body;
+    await Cliente.findOne({rut})
+    .then((cliente)=>{//encontramos el cliente
+        var historial = []; //preparamos el historial para reemplazarlo!
+        var sumaGeneral = 0;
+        //recorremos el historial para sumar todos los valores de total de compra
+        cliente.historial.forEach((ventaUnica)=>{
+            var sumaProductos = 0;
+            ventaUnica.productos.forEach((productos)=>{
+                sumaProductos = sumaProductos + productos.cantidad*productos.valor;
+            })
+            
+            ventaUnica.totalDeVenta = sumaProductos;
+            historial.push(ventaUnica)
+            sumaGeneral = sumaGeneral + sumaProductos
+        })
+
+
+
+        Cliente.findOneAndUpdate({rut},{$set:{totalDeCompra: sumaGeneral,historial:historial}})
+        .then(()=>
+            {
+                res.json({status:200,mensaje:"suma correcta!"})
+            }
+        )
+        .catch((err)=>{
+            console.log(err)
+            res.json({status:500,mensaje:"parece que no sabe sumar je"})
+        })
+
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,mensaje:"parece que no sabe sumar je"})
+    })
+}
+
 module.exports = controller;

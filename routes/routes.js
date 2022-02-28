@@ -25,15 +25,24 @@ router.get('/verificarEstado/:id', controller_Ventas.verificarEstado);
 router.get('/get/ventas/estadistica',controller_Ventas.getVenta);
 router.get('/get/ventas',controller_Ventas.getVentaComponent)
 router.get('/venta/get/list/product/:id',controller_Ventas.getProductForId)
-router.post('/venta/delete/producto',controller_Ventas.deleteproducto)
+router.post('/venta/delete/producto',controller_Ventas.deleteproducto) //modificacion de valores de cantidad
 router.get('/get/ventas/for/client/:rut',controller_Ventas.getVentaCliente)
-
+router.post('/modificar/estado',controller_Ventas.modificarEstado)
+router.post('/delete/venta',controller_Ventas.deleteVenta)
+router.post('/update/venta',controller_Ventas.actualizarVenta);
 //cliente
+router.post('/delete/cliente',controller_Cliente.eliminarCliente)
 router.post('/createCliente', controller_Cliente.crearCliente);
 router.post('/mensajeMasivo', controller_Cliente.mensajeMasivo);
 router.get('/verClientes', controller_Cliente.verClientes);
 router.get('/getCliente/estadistica',controller_Cliente.getCliente_Estadistica);
 router.get('/search/cliente/:rut',controller_Cliente.searchCliente)
+router.post('/get/venta/cliente/',controller_Cliente.searchClienteVentaUnica);
+router.post('/calcular/total/Venta',controller_Cliente.calcularTotalVenta);
+
+//actualizar
+
+router.post('/actualizar/carrito/Cliente',controller_Cliente.actualizarCarrito);
 
 
 //proveedor
