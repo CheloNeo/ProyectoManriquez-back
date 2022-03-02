@@ -1,10 +1,14 @@
 const { Schema, model } = require("mongoose");
 const ProveedorSchema = Schema({
-    nombre:String,
-    direccion:String,
-    fono:Number,
-    atencion:String,
-    detalle: String,
+    nombre: String,
+    nombreContacto: String,
+    direccion: String,
+    telefono: String,
+    atencion: String,
+    correoAtencion: String,
+    retira: String,
+    numeroGuia: String,
+    comentario: String,
 });
 
 
