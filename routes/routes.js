@@ -79,5 +79,8 @@ router.get('/get/categoria',controller_categoria.getCategoria)
 
 //pendientes
 router.post('/add/pendiente',controller_pendiente.addPendiente);
+router.get('/get/pendiente',controller_pendiente.getPendiente);
+router.get('/get/pendiente/:id',controller_pendiente.getPendienteForId);
+router.post('/delete/anteriores',controller_pendiente.deleteAnteriores);
 
 module.exports = router;
