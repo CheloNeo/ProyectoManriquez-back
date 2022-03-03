@@ -8,6 +8,7 @@ let controller_tarea = require('../controllers/control-Tareas');
 let controller_History = require('../controllers/control-History');
 let controller_Product = require('../controllers/control-Productos')
 let controller_categoria = require('../controllers/control-Categoria')
+let controller_pendiente = require('../controllers/controller-Pendiente')
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -76,6 +77,10 @@ router.post('/modify/categoria/:id',controller_categoria.modificarCategoria)
 router.post('/delete/categoria/:id',controller_categoria.eliminarCategoria)
 router.get('/get/categoria',controller_categoria.getCategoria)
 
-
+//pendientes
+router.post('/add/pendiente',controller_pendiente.addPendiente);
+router.get('/get/pendiente',controller_pendiente.getPendiente);
+router.get('/get/pendiente/:id',controller_pendiente.getPendienteForId);
+router.post('/delete/anteriores',controller_pendiente.deleteAnteriores);
 
 module.exports = router;
