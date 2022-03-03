@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const ProveedorSchema = Schema({
     nombre: String,
+    rut: String,
     nombreContacto: String,
     direccion: String,
     telefono: String,
