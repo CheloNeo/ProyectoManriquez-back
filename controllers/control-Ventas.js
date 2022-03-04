@@ -2,6 +2,7 @@ let controller = {}
 const Cliente = require('../models/Cliente');
 const Orden = require('../models/OrdenDeVenta');
 const Ventas = require('../models/Ventas');
+const Producto = require('../models/Producto')
 let Venta = require('../models/Ventas');
 const router = require('../routes/routes');
 
@@ -20,16 +21,17 @@ controller.crearVenta = async (req,res)=>{
             aux.push(venta)
             Cliente.findOneAndUpdate({rut:rut_cliente},{$set: {historial:aux} } )
             .then((data)=>{
-
+                
                 var suma = 0
                 venta.productos.forEach((producto)=>{
+                    console.log(producto)
                     suma = suma + producto.cantidad*producto.valor;
                 })
                 venta.totalDeVenta = suma
 
 
 
-                venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
+                // venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
             })
             .catch((err)=>{
                 res.json({status:500,mensaje:"Ingreso no exitoso!"})
