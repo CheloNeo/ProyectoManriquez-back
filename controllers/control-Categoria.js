@@ -1,5 +1,6 @@
 let controller = {};
 const Categoria = require("../models/Categoria");
+const Producto = require("../models/Producto");
 
 //crear categoria
 controller.crearCategoria = (req, res) => {
@@ -74,4 +75,32 @@ controller.getCategoria = async(req,res)=>{
         console.log(err)
     })
 }
+controller.modifyCategory = async(req,res)=>{
+    const{value,newName}=req.body;
+
+    await Categoria.findById(value)
+    .then((data)=>{
+        var nombreReal = data.nombre;
+        Categoria.findOneAndUpdate({_id:value},{$set:{nombre:newName}})
+        .then(()=>{
+            Producto.updateMany({categoria:nombreReal},{$set:{categoria:newName}})
+            .then((data)=>{
+                res.json({status:200,mensaje:"Actualizacion correcta!"})
+            })
+            .catch((err)=>{
+                res.json({status:500,mensaje:"Actualizacion incorrecta!"})
+            })
+        })
+        .catch((err)=>{
+            res.json({status:500,mensaje:"Actualizacion incorrecta!"})
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Actualizacion incorrecta!"})
+    })
+
+    
+}
+
+
 module.exports = controller
