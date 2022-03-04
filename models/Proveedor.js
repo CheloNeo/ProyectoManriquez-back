@@ -9,7 +9,6 @@ const ProveedorSchema = Schema({
     correoAtencion: String,
     retira: String,
     numeroGuia: String,
-    comentario: String,
 });
 
 
