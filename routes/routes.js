@@ -74,13 +74,17 @@ router.get('/getHistory/:rut',controller_History.traerHistoria);
 //categorias
 router.post('/add/categoria',controller_categoria.crearCategoria)
 router.post('/modify/categoria/:id',controller_categoria.modificarCategoria)
-router.post('/delete/categoria/:id',controller_categoria.eliminarCategoria)
+router.get('/delete/categoria/:id',controller_categoria.eliminarCategoria)
 router.get('/get/categoria',controller_categoria.getCategoria)
+router.post('/modify/category',controller_categoria.modifyCategory)
+
 
 //pendientes
 router.post('/add/pendiente',controller_pendiente.addPendiente);
 router.get('/get/pendiente',controller_pendiente.getPendiente);
 router.get('/get/pendiente/:id',controller_pendiente.getPendienteForId);
 router.post('/delete/anteriores',controller_pendiente.deleteAnteriores);
+router.get('/delete/one/:id',controller_pendiente.deleteOne);
+router.post('/modify/one',controller_pendiente.updateOne);
 
 module.exports = router;
