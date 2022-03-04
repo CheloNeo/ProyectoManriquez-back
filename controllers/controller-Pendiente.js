@@ -64,5 +64,29 @@ controller.deleteAnteriores = async (req,res)=>{
         res.json({status:500,mensaje:"No fueron eliminados!"})
     })
 }
+controller.deleteOne = async (req,res)=>{
+    await Pendiente.findByIdAndRemove(req.params.id)
+    .then(()=>{
+        res.json({status:200,mensaje:"Eliminado!"})
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Hubo un error!"})
+    })
+}
+controller.updateOne = async (req,res)=>{
+    const{id,data:{_id,tipo,fecha,observacion}}=req.body
+    var newfecha = new Date(fecha).getTime()
+    await Pendiente.findByIdAndUpdate(id,{$set:{
+        tipo:tipo,
+        fecha:newfecha,
+        observacion:observacion
+    }})
+    .then(()=>{
+        res.json({status:200,mensaje:"Update exitoso"})
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:"Update no exitoso"})
+    })
+}
 
 module.exports = controller
