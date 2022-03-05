@@ -23,33 +23,26 @@ controller.crearProducto = (req, res) => {
 
 //Modificar Producto
 
-controller.modificarProducto = async (req, res) => {
-    console.log(req.body)
-    // try {
-    //     const productoOriginal = await Producto.updateOne({
-    //         _id: req.params.id,
-    //         $set: {
-    //             nombre: req.body.nombre,
-    //             precio: req.body.valor,
-    //             descripcion: req.body.descripcion,
-    //             color: req.body.color,
-    //             stock: req.body.stock,
-    //             categoria: req.body.categoria,
-    //             imagen: req.body.imagen
-    //         }
-    //     });
-    //     res.json({
-    //         status: 200,
-    //         mensaje: "Acutalizado con exito"
-            
-    //     })
-    // } catch (error) {
-    //     res.json({
-    //         status: 500,
-    //         mensaje: "Error en el sistema"
-            
-    //     })
-    // }
+controller.modificarProducto = async (req, res)=> {
+    const {_id,nombre,valor,descripcion,categoria,stock,color,imagen} = req.body
+
+    await Producto.findByIdAndUpdate(_id,{$set:{
+        nombre:nombre,
+        valor:valor,
+        descripcion:descripcion,
+        categoria:categoria,
+        stock:stock,
+        color:color,
+        imagen:imagen,
+    }})
+    .then(()=>{
+        res.json({status:200,mensaje:"Actualizacion exitosa!!!"})
+    })
+    .catch((err)=>{
+        
+        res.json({status:500,mensaje:"Falla al actualizar!!!!"})
+      
+    })
 
 }
 
@@ -101,4 +94,16 @@ controller.getForCategory = async (req,res) =>{
         console.log(err)
     })
 }
+controller.getOneProduct = async (req,res) =>{
+    await Producto.findById(req.params.id)
+    .then((data)=>{
+        res.json({status:200,data:data})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({status:500,data:null})
+    })
+}
+
+
 module.exports = controller
