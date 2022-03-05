@@ -51,6 +51,7 @@ router.post('/createProveedor',controller_Proveedor.crearProveedor);
 router.post('/eliminarProveedor',controller_Proveedor.eliminarProveedor);
 router.get('/listarProveedores',controller_Proveedor.ListarProveedores);
 router.put('/modificarProveedor/:id',controller_Proveedor.modificarProveedor);
+router.get('/proveedor/:id',controller_Proveedor.buscarProveedor);
 
 //producto
 router.post('/newProduct', controller_Product.crearProducto);

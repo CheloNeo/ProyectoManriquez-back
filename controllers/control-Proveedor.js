@@ -93,5 +93,32 @@ controller.modificarProveedor = async (req, res)=>{
     res.json({status:200, mensaje: "Cambios Realizados con exito"})
     
 }
+//buscar proveedor por id
+
+controller.buscarProveedor = async (req, res)=>{
+        let id= req.params.id;
+        try {
+        
+        Proveedor.findById(id)
+        .then((data)=>{
+            res.json({
+                status:200,
+                proveedor:data
+            })
+        })
+        .catch((err)=>{
+            res.json({
+                status:500,
+                mensaje:"No se encuentra registrado el  proveedor"
+            })
+        })
+
+    } catch (error) {
+        res.json({
+            status:500,
+            mensaje:"Error en la BD"
+        })
+    }
+}
 
 module.exports = controller
