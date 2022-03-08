@@ -1,9 +1,19 @@
 let controller = {};
 const Producto = require("../models/Producto");
+const Ventas = require("../models/Ventas");
 
 //crear Producto
-controller.crearProducto = (req, res) => {
+controller.crearProducto = async (req, res) => {
     const producto = new Producto(req.body);//creamos un nuevo producto
+    Producto.findOne({producto})
+    .then((data)=>{
+        if(data!=null){
+            res.json({//respondemos correctamente
+                status:500,
+                mensaje:"Este Producto ya existe :("
+            })
+        }
+    })
     producto.save().then((data) => {//lo guardamos en la bd
         res.json({//respondemos correctamente
             status:200,
@@ -105,5 +115,69 @@ controller.getOneProduct = async (req,res) =>{
     })
 }
 
+
+controller.addModifiProduct = async (req,res)=>{
+    const{id} = req.body
+    await Ventas.findById(id)
+    .then((data)=>{
+        var productos = data.productos;
+        productos.forEach((productoSeleccionado)=>{
+           
+            var nombre = productoSeleccionado.nombre
+            
+            var cantidadProducto = productoSeleccionado.cantidad;
+            
+            Producto.findOne({nombre})
+            .then((productoUnico)=>{
+                var cantidadNow = productoUnico.vecesComprado;
+                var newCantidad = cantidadNow + productoSeleccionado.cantidad
+
+                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad}})
+                .then(()=>{
+                    res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
+                })
+                .catch((err)=>{
+                    res.json({status:500,mensaje:err})
+                })
+                
+            })
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:err})
+    })
+}
+
+controller.deleteModifiProduct = async (req,res)=>{
+    const{id} = req.body
+    await Ventas.findById(id)
+    .then((data)=>{
+        var productos = data.productos;
+        productos.forEach((productoSeleccionado)=>{
+           
+            var nombre = productoSeleccionado.nombre
+            
+            var cantidadProducto = productoSeleccionado.cantidad;
+            
+            Producto.findOne({nombre})
+            .then((productoUnico)=>{
+                var cantidadNow = productoUnico.vecesComprado;
+                var newCantidad = cantidadNow - productoSeleccionado.cantidad
+
+                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad}})
+                .then(()=>{
+                    res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
+                })
+                .catch((err)=>{
+                    res.json({status:500,mensaje:err})
+                })
+                
+            })
+        })
+    })
+    .catch((err)=>{
+        res.json({status:500,mensaje:err})
+    })
+}
 
 module.exports = controller

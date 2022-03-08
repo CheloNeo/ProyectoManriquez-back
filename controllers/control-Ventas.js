@@ -24,7 +24,7 @@ controller.crearVenta = async (req,res)=>{
                 
                 var suma = 0
                 venta.productos.forEach((producto)=>{
-                    console.log(producto)
+                    
                     suma = suma + producto.cantidad*producto.valor;
                 })
                 venta.totalDeVenta = suma
@@ -113,7 +113,7 @@ controller.getVenta = async (req,res)=>{
             res.json({status:200,data:data})
         })
     } catch (error) {
-        console.log(error)
+      
     }
 }
 
@@ -130,10 +130,10 @@ controller.getVentaComponent = async(req,res)=>{
             res.json(data)
         })
         .catch((err)=>{
-            console.log(err)
+           
         })
     } catch (error) {
-        console.log(error)
+        
     }
 }
 
@@ -146,7 +146,7 @@ controller.getProductForId = async (req,res)=>{
             res.json(data.productos);
         })
     } catch (error) {
-        console.log(error)
+       
     }
 }
 
@@ -158,7 +158,6 @@ controller.deleteproducto = async (req,res)=>{
         res.json({status:200,mensaje:"elemento borrado"})
     })
     .catch((err)=>{
-        console.log(err)
         res.json({status:500,mensaje:"Hubo un error"})
     })
 }
@@ -171,7 +170,7 @@ controller.getVentaCliente = async (req,res)=>{
         res.json(data);
     })
     .catch((err)=>{
-        console.log(err)
+      
     })
 
 }
@@ -181,6 +180,9 @@ controller.modificarEstado = async (req,res)=>{
     await Ventas.findByIdAndUpdate(idVenta,{$set:{estado:aux}})
     .then((ventaPermutada)=>{
         ventaPermutada.estado = aux
+
+        
+
         Cliente.findOne({rut})
         .then((cliente)=>{
             var clienteData = cliente; //encontramos al cliente
@@ -189,21 +191,20 @@ controller.modificarEstado = async (req,res)=>{
             historial.forEach((ventaUnica)=>{
                 if(ventaUnica._id == idVenta){
                     indexVenta = historial.indexOf(ventaUnica)
+            
                 }
             })
             historial[indexVenta] = ventaPermutada
             Cliente.findOneAndUpdate({rut},{$set:{historial:historial}})
             .then(()=>{
-                res.json({status:200,mensaje:"Modificacion de estado en venta exitoso!"})
+                res.json({status:200,mensaje:ventaPermutada})
             })
             .catch((err)=>{
-                console.log(err)
-
                 res.json({status:500,mensaje:"Error en la actualizacion de historial"})
             })
         })
         .catch((err)=>{
-            console.log(err)
+         
 
             res.json({status:500,mensaje:"No se encontro el cliente!"})
         })
@@ -211,7 +212,7 @@ controller.modificarEstado = async (req,res)=>{
         
     })
     .catch((err)=>{
-        console.log(err)
+       
         res.json({status:500,mensaje:"No se encontro la venta :)"})
     })
     
@@ -239,7 +240,7 @@ controller.deleteVenta = async (req,res)=>{
                 res.json({status:200,mensaje:"Data actualizada"})
             })
             .catch((err)=>{
-                console.log(err)
+     
                 res.json({status:500,mensaje:"Data no actualizada"})
             })
 
@@ -247,19 +248,22 @@ controller.deleteVenta = async (req,res)=>{
       
 
         .catch((err)=>{
-            console.log(err)
+            
             res.json({status:500,mensaje:"Data no actualizada"})
         })
     })
    
 
     .catch((err)=>{
-        console.log(err)
+    
         res.json({status:500,mensaje:"Data no actualizada"})
     })
 
 
 }
+
+
+
 
 
 module.exports = controller

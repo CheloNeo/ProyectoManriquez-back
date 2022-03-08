@@ -60,6 +60,8 @@ router.delete('/delete/:id',controller_Product.eliminarProducto);
 router.get('/get/producto',controller_Product.getProductos);//general
 router.post('/get/producto/category',controller_Product.getForCategory); //estadistica
 router.get('/get/product/:id',controller_Product.getOneProduct); //estadistica
+router.post('/modify/add/cantidad', controller_Product.addModifiProduct)
+router.post('/modify/delete/cantidad',controller_Product.deleteModifiProduct)
 
 
 
