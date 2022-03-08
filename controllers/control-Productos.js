@@ -26,7 +26,7 @@ controller.crearProducto = async (req, res) => {
                 mensaje: "Error en el Sistema"
                 
             })
-            console.log(error)
+            // console.log(error)
         })
 
 }
@@ -87,7 +87,7 @@ controller.getProductos= async(req,res)=>{
         res.json(data);
     })
     .catch((err)=>{
-        console.log(err)
+        // console.log(err)
     })
 }
 
@@ -97,11 +97,11 @@ controller.getForCategory = async (req,res) =>{
     console.log(req.body)
     await Producto.find({categoria:data}).exec()
     .then((dataProduct)=>{
-        console.log(dataProduct)
+        // console.log(dataProduct)
         res.json(dataProduct)
     })
     .catch((err)=>{
-        console.log(err)
+        // console.log(err)
     })
 }
 controller.getOneProduct = async (req,res) =>{
@@ -110,7 +110,7 @@ controller.getOneProduct = async (req,res) =>{
         res.json({status:200,data:data})
     })
     .catch((err)=>{
-        console.log(err)
+        // console.log(err)
         res.json({status:500,data:null})
     })
 }
@@ -130,9 +130,11 @@ controller.addModifiProduct = async (req,res)=>{
             Producto.findOne({nombre})
             .then((productoUnico)=>{
                 var cantidadNow = productoUnico.vecesComprado;
+                var stockNow = productoUnico.stock;
+                var newStock = stockNow - productoSeleccionado.cantidad
                 var newCantidad = cantidadNow + productoSeleccionado.cantidad
 
-                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad}})
+                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad,stock:newStock}})
                 .then(()=>{
                     res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
                 })
@@ -162,9 +164,11 @@ controller.deleteModifiProduct = async (req,res)=>{
             Producto.findOne({nombre})
             .then((productoUnico)=>{
                 var cantidadNow = productoUnico.vecesComprado;
+                var stockNow = productoUnico.stock;
+                var newStock = stockNow + productoSeleccionado.cantidad
                 var newCantidad = cantidadNow - productoSeleccionado.cantidad
 
-                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad}})
+                Producto.findOneAndUpdate({nombre},{$set:{vecesComprado:newCantidad,stock:newStock}})
                 .then(()=>{
                     res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
                 })
@@ -178,6 +182,45 @@ controller.deleteModifiProduct = async (req,res)=>{
     .catch((err)=>{
         res.json({status:500,mensaje:err})
     })
+}
+
+controller.verifyStock = async (req,res)=>{
+    const{id}= req.body;
+    var bandera = 0
+    var productoStock = 0
+    var nombre 
+    Ventas.findById(id)
+    .then((venta)=>{
+        var productos = venta.productos
+        productos.forEach((producto)=>{
+            var cantidad = producto.cantidad;
+            var nombre = producto.nombre
+            Producto.findOne({nombre})
+            .then((productoBd)=>{
+                var productoStock = productoBd.stock
+                if((productoStock-cantidad) < 0){
+                    bandera = 1
+
+                }
+            })
+            .catch((err)=>{
+                // console.log(err)
+            })
+        })
+        setTimeout(()=>{
+            if(bandera === 1){
+                res.json({status:500,mensaje:`revisa el stock de los productos seleccionados`})
+            }
+            else if(bandera === 0){
+                res.json({status:200,mensaje:"venta valida!"})
+            }
+        },1000)
+        
+    })
+    .catch((err)=>{
+        // console.log(err)
+    })
+    
 }
 
 module.exports = controller

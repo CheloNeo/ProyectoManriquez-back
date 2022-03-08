@@ -113,6 +113,7 @@ controller.searchCliente = async(req,res)=>{
 
 controller.searchClienteVentaUnica = async (req,res)=>{
     const { data , rut }  = req.body;
+    
     if(rut=='' || data === ''){
         res.json({status:404,mensaje:"usuario no encontrado!"});
     }
