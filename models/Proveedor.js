@@ -8,7 +8,6 @@ const ProveedorSchema = Schema({
     atencion: String,
     correoAtencion: String,
     retira: String,
-    numeroGuia: String,
 });
 
 
