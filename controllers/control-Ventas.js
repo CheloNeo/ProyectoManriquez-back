@@ -9,10 +9,14 @@ const router = require('../routes/routes');
 
 
 controller.crearVenta = async (req,res)=>{
+   
     const venta = new Venta(req.body);
+    console.log(venta,' soy la venta');
     venta.id_Venta = Date.now();
     venta.fecha = Date.now();
     rut_cliente = venta.cliente.rut
+    proveedor = venta.proveedor
+    comentario = venta.comentario
     await Cliente.findOne({rut:rut_cliente},{historial:1})
     .then((data)=>{
         if(data!=null){
@@ -31,7 +35,7 @@ controller.crearVenta = async (req,res)=>{
 
 
 
-                // venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
+                venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
             })
             .catch((err)=>{
                 res.json({status:500,mensaje:"Ingreso no exitoso!"})

@@ -16,6 +16,16 @@ const VentaSchema = Schema({
         correo: String,
         rut: String,
     }, //son objectos de Cliente
+    proveedor: {
+        nombre: String,
+        rut: String,
+        nombreContacto: String,
+        direccion: String,
+        telefono: String,
+        atencion: String,
+        correoAtencion: String,
+        retira: String,
+    },
     estado: String,
     productos: 
     [
@@ -32,6 +42,8 @@ const VentaSchema = Schema({
     porcentaje: Number,
     totalDeVenta:Number,
     envio:String,
+    comentario:String
+    
 });
 
 
