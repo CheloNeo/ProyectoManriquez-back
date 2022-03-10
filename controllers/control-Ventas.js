@@ -181,6 +181,7 @@ controller.getVentaCliente = async (req,res)=>{
 
 controller.modificarEstado = async (req,res)=>{
     const{aux,rut,idVenta} = req.body;
+  
     await Ventas.findByIdAndUpdate(idVenta,{$set:{estado:aux}})
     .then((ventaPermutada)=>{
         ventaPermutada.estado = aux

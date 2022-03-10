@@ -62,6 +62,7 @@ router.post('/get/producto/category',controller_Product.getForCategory); //estad
 router.get('/get/product/:id',controller_Product.getOneProduct); //estadistica
 router.post('/modify/add/cantidad', controller_Product.addModifiProduct)
 router.post('/modify/delete/cantidad',controller_Product.deleteModifiProduct)
+router.post('/verify/cantidad',controller_Product.verifyStock)
 
 
 
