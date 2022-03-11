@@ -139,14 +139,14 @@ controller.addModifiProduct = async (req,res)=>{
                     res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
                 })
                 .catch((err)=>{
-                    res.json({status:500,mensaje:err})
+              
                 })
                 
             })
         })
     })
     .catch((err)=>{
-        res.json({status:500,mensaje:err})
+       
     })
 }
 
@@ -173,14 +173,17 @@ controller.deleteModifiProduct = async (req,res)=>{
                     res.json({status:200,mensaje:"Valor actualizado de manera satisfactoria!"})
                 })
                 .catch((err)=>{
-                    res.json({status:500,mensaje:err})
+                   
                 })
                 
+            })
+            .catch((err)=>{
+               
             })
         })
     })
     .catch((err)=>{
-        res.json({status:500,mensaje:err})
+        
     })
 }
 

@@ -9,6 +9,7 @@ let controller_History = require('../controllers/control-History');
 let controller_Product = require('../controllers/control-Productos')
 let controller_categoria = require('../controllers/control-Categoria')
 let controller_pendiente = require('../controllers/controller-Pendiente')
+let controller_finanzas = require('../controllers/controll-finanzas')
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -92,5 +93,13 @@ router.get('/get/pendiente/:id',controller_pendiente.getPendienteForId);
 router.post('/delete/anteriores',controller_pendiente.deleteAnteriores);
 router.get('/delete/one/:id',controller_pendiente.deleteOne);
 router.post('/modify/one',controller_pendiente.updateOne);
+
+
+//finanzas
+router.post('/add/venta/finanzas',controller_finanzas.addGanancia)
+router.post('/deleteVenta/finanzas',controller_finanzas.removeGanancia)
+router.post('/new/finanza',controller_finanzas.addFinanza)
+router.post('/add/finanzas/gastos',controller_finanzas.addGasto)
+router.get('/get/finanzas',controller_finanzas.getFinanzas)
 
 module.exports = router;
