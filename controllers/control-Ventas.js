@@ -11,7 +11,7 @@ const router = require('../routes/routes');
 controller.crearVenta = async (req,res)=>{
    
     const venta = new Venta(req.body);
-    console.log(venta,' soy la venta');
+  
     venta.id_Venta = Date.now();
     venta.fecha = Date.now();
     rut_cliente = venta.cliente.rut

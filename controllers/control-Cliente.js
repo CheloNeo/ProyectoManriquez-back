@@ -63,10 +63,10 @@ controller.verClientes = async (req, res) => {
             rut: 1,
             totalDeCompra:1,
         });
-        // console.log(clientes);
+        
         res.json({status:200,clientes: clientes});
     } catch (error) {
-        console.log(error);
+      
         res.json({
             status:500,
             mensaje: "Hable con el administrador"
@@ -83,7 +83,7 @@ controller.getCliente_Estadistica = async (req,res)=>{
             totalDeCompra:1
         }).then((data)=>{ res.json({status:200,clientes: data});})
     } catch (error) {
-        console.log(error)
+    
     }
 }
 
@@ -107,7 +107,7 @@ controller.searchCliente = async(req,res)=>{
             }
         })
     } catch (error) {
-        console.log(error)
+       
     }
 }
 
@@ -125,16 +125,20 @@ controller.searchClienteVentaUnica = async (req,res)=>{
                 
                 Ventas.findById(data,{})
                 .then((dataVenta)=>{
-                   if(dataVenta!=null){
-                        res.json({status:200,data:cliente,dataVenta})
-                   }
+                  
+                    if(dataVenta!=null){
+                            res.json({status:200,data:cliente,dataVenta})
+                    }
+                    else{
+                        res.json({status:500,mensaje:"La data no fue encontrada"})
+                    }
                 })
                 .catch((err)=>{
-                    res.json({status:404,mensaje:"usuario no encontrado!"});
+                    // res.json({status:404,mensaje:"usuario no encontrado!"});
                 })
             })
             .catch((err)=>{
-                res.json({status:404,mensaje:"usuario no encontrado!"});
+                // res.json({status:404,mensaje:"usuario no encontrado!"});
             })
 
         } catch (error) {
@@ -229,13 +233,13 @@ controller.calcularTotalVenta = async (req,res)=>{
             }
         )
         .catch((err)=>{
-            console.log(err)
+          
             res.json({status:500,mensaje:"parece que no sabe sumar je"})
         })
 
     })
     .catch((err)=>{
-        console.log(err)
+      
         res.json({status:500,mensaje:"parece que no sabe sumar je"})
     })
 }

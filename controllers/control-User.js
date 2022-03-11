@@ -42,7 +42,7 @@ controller.login = async (req,res)=>{
     // se debe enviar un usuario buscarlo en la base de datos
     // y devolver true si esta y en caso contrario false
     const {rut,pass} = req.body;
-    console.log(rut,pass)
+    
     await Usuario.findOne({rut})
     .then((data)=>{
         if(data == null){
@@ -80,7 +80,7 @@ controller.validateToken = async (req, res)=>{
 
         
     } catch (error) {   
-        console.log(error)
+     
         res.json({status:500,mensaje:"Ingresa nuevamente, ingreso invalido"})
     }
 }
@@ -100,7 +100,7 @@ controller.deleteUsuario = (req,res)=>{
         }
     })
     .catch((err)=>{
-        console.log(err)
+     
         res.json({status:500, mensaje:"error"});
     })
 }

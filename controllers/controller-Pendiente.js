@@ -9,7 +9,7 @@ controller.addPendiente  = async (req,res)=>{
         res.json({ status: 200, mensaje: "Creacion exitosa" });
     })
     .catch((err) => {
-        console.log(err)
+        
         res.json({ status: 500, mensaje: "falla en la creacion" });
     })
     
@@ -25,7 +25,7 @@ controller.getPendiente  = async (req,res)=>{
         res.json({status:200,data:data})
     })
     .catch((err)=>{
-        console.log(err)
+      
         res.json({status:500})
     })
     
@@ -41,7 +41,7 @@ controller.getPendienteForId  = async (req,res)=>{
         res.json({status:200,data:data})
     })
     .catch((err)=>{
-        console.log(err)
+      
         res.json({status:500})
     })
     
@@ -60,7 +60,7 @@ controller.deleteAnteriores = async (req,res)=>{
         
     })
     .catch((err)=>{
-        console.log(err)
+      
         res.json({status:500,mensaje:"No fueron eliminados!"})
     })
 }

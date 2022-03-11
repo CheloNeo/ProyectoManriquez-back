@@ -16,7 +16,7 @@ controll.addVenta = async (req = request ,res)=>{
         historialAux = data.historial
     })
     .catch((err)=>{
-        console.log(err)
+       
     })
 
     historialAux.push(req.body) //agregamos la nueva venta
@@ -51,7 +51,7 @@ controll.traerHistoria = async(req=request, res)=>{
         })
             
     } catch (error) {
-        console.log(error)
+      
         res.json({
             status: 500,
             mensaje: "Hable con el administrador"

@@ -26,7 +26,7 @@ controller.crearProducto = async (req, res) => {
                 mensaje: "Error en el Sistema"
                 
             })
-            // console.log(error)
+        
         })
 
 }
@@ -87,21 +87,21 @@ controller.getProductos= async(req,res)=>{
         res.json(data);
     })
     .catch((err)=>{
-        // console.log(err)
+        
     })
 }
 
 
 controller.getForCategory = async (req,res) =>{
     const{ data } = req.body
-    console.log(req.body)
+   
     await Producto.find({categoria:data}).exec()
     .then((dataProduct)=>{
-        // console.log(dataProduct)
+        
         res.json(dataProduct)
     })
     .catch((err)=>{
-        // console.log(err)
+        
     })
 }
 controller.getOneProduct = async (req,res) =>{
@@ -110,7 +110,7 @@ controller.getOneProduct = async (req,res) =>{
         res.json({status:200,data:data})
     })
     .catch((err)=>{
-        // console.log(err)
+       
         res.json({status:500,data:null})
     })
 }
@@ -207,7 +207,7 @@ controller.verifyStock = async (req,res)=>{
                 }
             })
             .catch((err)=>{
-                // console.log(err)
+            
             })
         })
         setTimeout(()=>{
@@ -221,7 +221,7 @@ controller.verifyStock = async (req,res)=>{
         
     })
     .catch((err)=>{
-        // console.log(err)
+       
     })
     
 }

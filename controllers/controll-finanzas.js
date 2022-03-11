@@ -92,16 +92,16 @@ controller.addGasto = async (req,res)=>{
                 res.json({status:200,mensaje:"Ingreso correcto!"})
             })
             .catch((err)=>{
-                console.log(err)
+               
             })
         })
         .catch((err)=>{
-            console.log(err)
+         
         })
         
     })
     .catch((err)=>{
-       console.log(err)
+       
     })
 }
 

@@ -72,7 +72,7 @@ controller.getCategoria = async(req,res)=>{
         res.json(data)
     })
     .catch((err)=>{
-        console.log(err)
+  
     })
 }
 controller.modifyCategory = async(req,res)=>{
