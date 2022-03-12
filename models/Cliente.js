@@ -28,9 +28,14 @@ const ClienteSchema = Schema({
                     cantidad:Number,
                 }
             ]
-            , //son objectos de productos
+            ,
+            servicios:[
+                {
+                    nombre:String,
+                    valor:Number,
+                }
+            ], //son objectos de productos
             fecha: Number, //valor automatico en hora minuto segundo y fecha
-            servicios: String,
             porcentaje: Number,
             totalDeVenta:Number,
             envio:String,

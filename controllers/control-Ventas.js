@@ -11,12 +11,13 @@ const router = require('../routes/routes');
 controller.crearVenta = async (req,res)=>{
    
     const venta = new Venta(req.body);
-  
+    console.log(venta)
     venta.id_Venta = Date.now();
     venta.fecha = Date.now();
     rut_cliente = venta.cliente.rut
     proveedor = venta.proveedor
     comentario = venta.comentario
+    // console.log(venta)
     await Cliente.findOne({rut:rut_cliente},{historial:1})
     .then((data)=>{
         if(data!=null){
@@ -25,16 +26,6 @@ controller.crearVenta = async (req,res)=>{
             aux.push(venta)
             Cliente.findOneAndUpdate({rut:rut_cliente},{$set: {historial:aux} } )
             .then((data)=>{
-                
-                var suma = 0
-                venta.productos.forEach((producto)=>{
-                    
-                    suma = suma + producto.cantidad*producto.valor;
-                })
-                venta.totalDeVenta = suma
-
-
-
                 venta.save().then(()=>{res.json({status:200,mensaje:"Ingreso exitoso!"})})
             })
             .catch((err)=>{
@@ -59,6 +50,10 @@ controller.actualizarVenta= async (req,res)=>{
         venta.productos.forEach((producto)=>{
             suma = suma + producto.cantidad * producto.valor
         })
+        venta.servicios.forEach((service)=>{
+            suma = suma + service.valor;
+        })
+        suma = Math.trunc(suma+suma*0.19)
         Ventas.findByIdAndUpdate(id,{$set:{totalDeVenta:suma}})
         .then(()=>{
             res.json({status:200,mensaje:"Venta actualizada"})
@@ -236,7 +231,7 @@ controller.deleteVenta = async (req,res)=>{
             var index 
             historial.forEach((ventaUnica)=>{
                 if(ventaUnica._id != id){
-                  historialAuxiliar.push(ventaUnica);
+                  historialAuxiliar.push(ventaUnica); 
                 }
             })
             

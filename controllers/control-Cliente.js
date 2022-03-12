@@ -218,8 +218,11 @@ controller.calcularTotalVenta = async (req,res)=>{
             ventaUnica.productos.forEach((productos)=>{
                 sumaProductos = sumaProductos + productos.cantidad*productos.valor;
             })
+            ventaUnica.servicios.forEach((servicios)=>{
+                sumaProductos = sumaProductos + servicios.valor;
+            })
             
-            ventaUnica.totalDeVenta = sumaProductos;
+            ventaUnica.totalDeVenta = Math.trunc(sumaProductos+sumaProductos*0.19);
             historial.push(ventaUnica)
             sumaGeneral = sumaGeneral + sumaProductos
         })
