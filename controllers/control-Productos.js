@@ -59,6 +59,7 @@ controller.modificarProducto = async (req, res)=> {
 //eliminar productos
 controller.eliminarProducto = (req, res)=>{
     const _id = req.params.id;
+  
     Producto.findOneAndDelete({_id})
     .then((data)=>{
         if(data== null){
