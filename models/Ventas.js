@@ -46,6 +46,7 @@ const VentaSchema = Schema({
     fecha: Number, //valor automatico en hora minuto segundo y fecha
     porcentaje: Number,
     totalDeVenta:Number,
+    abono:Number,
     envio:String,
     comentario:String
     
