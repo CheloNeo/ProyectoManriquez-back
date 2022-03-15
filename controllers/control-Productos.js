@@ -34,11 +34,12 @@ controller.crearProducto = async (req, res) => {
 //Modificar Producto
 
 controller.modificarProducto = async (req, res)=> {
-    const {_id,nombre,valor,descripcion,categoria,stock,color,imagen} = req.body
+    const {_id,nombre,valor,unidadMedida,descripcion,categoria,stock,color,imagen} = req.body
 
     await Producto.findByIdAndUpdate(_id,{$set:{
         nombre:nombre,
         valor:valor,
+        unidadMedida:unidadMedida,
         descripcion:descripcion,
         categoria:categoria,
         stock:stock,

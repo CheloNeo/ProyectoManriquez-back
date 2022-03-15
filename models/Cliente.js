@@ -2,6 +2,8 @@ const { Schema, model } = require("mongoose");
 const ClienteSchema = Schema({
     nombre: String,
     direccion: String,
+    comuna: String,
+    ciudad: String,
     telefono: String,
     correo: String,
     rut: String,
@@ -14,6 +16,8 @@ const ClienteSchema = Schema({
             cliente: {
                 nombre: String,
                 direccion: String,
+                comuna: String,
+                ciudad: String,
                 telefono: String,
                 correo: String,
                 rut: String,
