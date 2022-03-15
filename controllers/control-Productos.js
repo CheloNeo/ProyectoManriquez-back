@@ -8,10 +8,10 @@ controller.crearProducto = async (req, res) => {
     Producto.findOne({producto})
     .then((data)=>{
         if(data!=null){
-            res.json({//respondemos correctamente
-                status:500,
-                mensaje:"Este Producto ya existe :("
-            })
+            // res.json({//respondemos correctamente
+            //     status:500,
+            //     mensaje:"Este Producto ya existe :("
+            // })
         }
     })
     producto.save().then((data) => {//lo guardamos en la bd
@@ -21,11 +21,11 @@ controller.crearProducto = async (req, res) => {
         })
     })
         .catch((error) => {
-            res.json({//informamos de errores
-                status: 500,
-                mensaje: "Error en el Sistema"
+            // res.json({//informamos de errores
+            //     status: 500,
+            //     mensaje: "Error en el Sistema"
                 
-            })
+            // })
         
         })
 

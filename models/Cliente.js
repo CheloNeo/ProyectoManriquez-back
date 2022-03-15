@@ -30,6 +30,7 @@ const ClienteSchema = Schema({
                     valor: Number,
                     descripcion: String,
                     cantidad:Number,
+                    unidadMedida:String,
                 }
             ]
             ,

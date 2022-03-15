@@ -34,6 +34,7 @@ const VentaSchema = Schema({
             valor: Number,
             descripcion: String,
             cantidad:Number,
+            unidadMedida:String,
         }
     ]
     , //son objectos de productos

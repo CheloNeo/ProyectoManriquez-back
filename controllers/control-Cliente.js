@@ -125,7 +125,7 @@ controller.searchClienteVentaUnica = async (req,res)=>{
                 
                 Ventas.findById(data,{})
                 .then((dataVenta)=>{
-                  
+                    console.log(dataVenta)
                     if(dataVenta!=null){
                             res.json({status:200,data:cliente,dataVenta})
                     }
