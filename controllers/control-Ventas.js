@@ -162,6 +162,62 @@ controller.deleteproducto = async (req,res)=>{
 }
 
 
+//abono
+controller.addAbono = async (req,res) =>{
+    const{valorAbono,idVenta} = req.body;
+
+    //buscamos la venta y le cambiamos el estado!
+
+    Ventas.findById(idVenta)
+    .then((venta)=>{
+        var abonoActual = venta.abono;
+        var TotalActual = venta.totalDeVenta;
+        var rut = venta.cliente.rut
+
+        //calculamos que el abono no se exceda!
+        if(abonoActual+parseInt(valorAbono) > TotalActual){
+            res.json({status:500,mensaje:"No ingreses tanto!, solo falta $"+(TotalActual-abonoActual).toString()+" de abono"})
+        }
+        else if(abonoActual+parseInt(valorAbono) <= TotalActual){
+            var newAbono = parseInt(valorAbono) + parseInt(abonoActual);
+            
+            Ventas.findByIdAndUpdate(idVenta,{$set:{abono:newAbono}})
+            .then((data)=>{
+                Cliente.findOne({rut})
+                .then((cliente)=>{
+                    var historial = cliente.historial; //rescatamos el historial
+                    var indexVenta
+                    historial.forEach((ventaUnica)=>{
+                        if(ventaUnica._id == idVenta){
+                            indexVenta = historial.indexOf(ventaUnica)
+                    
+                        }
+                    })
+                    historial[indexVenta].abono = newAbono;
+                    
+                    
+                    Cliente.findOneAndUpdate({rut},{$set:{historial:historial}})
+                    .then(()=>{
+                        res.json({status:200,mensaje:"Ahora solo queda $"+(TotalActual-abonoActual-valorAbono).toString()+" que abonar"})
+                    })
+                    .catch((err)=>{
+                        res.json({status:500,mensaje:"Error en la actualizacion de historial"})
+                    })
+
+                })
+            })
+
+
+            
+        }
+
+    })
+
+
+
+}
+
+
 controller.getVentaCliente = async (req,res)=>{
     const {rut} = req.params
     await Cliente.findOne({rut},{historial:1})

@@ -104,4 +104,9 @@ router.post('/new/finanza',controller_finanzas.addFinanza)
 router.post('/add/finanzas/gastos',controller_finanzas.addGasto)
 router.get('/get/finanzas',controller_finanzas.getFinanzas)
 
+//abono
+
+router.post('/add/abono',controller_Ventas.addAbono)
+
+
 module.exports = router;

@@ -29,7 +29,7 @@ controller.addGanancia = async (req,res)=>{
             suma = suma + (element.cantidad * element.valor);
         });
         
-        var valorAgregar = suma*(venta.porcentaje/100)
+        var valorAgregar = Math.trunc(suma*(venta.porcentaje/100))
         Finanzas.findOne({})
         .then((finanza)=>{
             var ganancias = finanza.ganancias
@@ -55,7 +55,7 @@ controller.removeGanancia = async (req,res)=>{
             suma = suma + (element.cantidad * element.valor);
         });
         
-        var valorRemove = suma*(venta.porcentaje/100)
+        var valorRemove = Math.trunc(suma*(venta.porcentaje/100))
         Finanzas.findOne({})
         .then((finanza)=>{
             var ganancias = finanza.ganancias
