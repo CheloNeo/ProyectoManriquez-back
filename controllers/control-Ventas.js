@@ -11,7 +11,6 @@ const router = require('../routes/routes');
 controller.crearVenta = async (req,res)=>{
    
     const venta = new Venta(req.body);
-    console.log(venta)
     venta.id_Venta = Date.now();
     venta.fecha = Date.now();
     rut_cliente = venta.cliente.rut
@@ -21,7 +20,7 @@ controller.crearVenta = async (req,res)=>{
     await Cliente.findOne({rut:rut_cliente},{historial:1})
     .then((data)=>{
         if(data!=null){
-
+            total = data.totalDeCompra  + venta.totalDeVenta;
             aux = data.historial
             aux.push(venta)
             Cliente.findOneAndUpdate({rut:rut_cliente},{$set: {historial:aux} } )
@@ -44,16 +43,22 @@ controller.crearVenta = async (req,res)=>{
 controller.actualizarVenta= async (req,res)=>{
     const{id}=req.body;
 
+    //buscamos una venta compatible
     await Ventas.findById(id)
     .then((venta)=>{
         var suma = 0;
-        venta.productos.forEach((producto)=>{
+        venta.productos.forEach((producto)=>{ 
+            //recorremos sus productos y añadimos a la suma total
             suma = suma + producto.cantidad * producto.valor
         })
         venta.servicios.forEach((service)=>{
+            //recorremos los valores de servicio y añadimos a la suma total
             suma = suma + service.valor;
         })
+        //truncar la suma total a un numero entero!
         suma = Math.trunc(suma+suma*0.19)
+
+        //actualizamos la suma total
         Ventas.findByIdAndUpdate(id,{$set:{totalDeVenta:suma}})
         .then(()=>{
             res.json({status:200,mensaje:"Venta actualizada"})
@@ -151,10 +156,12 @@ controller.getProductForId = async (req,res)=>{
 
 controller.deleteproducto = async (req,res)=>{
     const{aux,idVenta} = req.body;
+    //aux es el nuevo array de productos
+    //id Venta es el id de venta a actualizar
     await Venta.findByIdAndUpdate(idVenta,{$set:{productos:aux}})
     .then((data)=>{
     
-        res.json({status:200,mensaje:"elemento borrado"})
+        res.json({status:200,mensaje:"elemento editado"})
     })
     .catch((err)=>{
         res.json({status:500,mensaje:"Hubo un error"})
@@ -165,6 +172,7 @@ controller.deleteproducto = async (req,res)=>{
 //abono
 controller.addAbono = async (req,res) =>{
     const{valorAbono,idVenta} = req.body;
+    
 
     //buscamos la venta y le cambiamos el estado!
 
@@ -173,6 +181,7 @@ controller.addAbono = async (req,res) =>{
         var abonoActual = venta.abono;
         var TotalActual = venta.totalDeVenta;
         var rut = venta.cliente.rut
+        console.log(venta)
 
         //calculamos que el abono no se exceda!
         if(abonoActual+parseInt(valorAbono) > TotalActual){

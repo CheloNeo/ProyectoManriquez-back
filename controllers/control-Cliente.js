@@ -164,7 +164,7 @@ controller.actualizarCarrito = async (req,res)=>{
                 //buscar la venta que es igual a la de nosotros y sacar el indice
                 if(ventaEnHistorial._id == idVenta){
                     var index = aux.indexOf(ventaEnHistorial)
-                    aux[index] = venta
+                    aux[index] = venta //guardamos en el indice correcto la nueva venta!
                     Cliente.findOneAndUpdate({rut},{$set:{historial:aux}})
                     .then(()=>{
                         res.json({status:200,mensaje:"Envio listo"})
@@ -176,11 +176,11 @@ controller.actualizarCarrito = async (req,res)=>{
             });
         })
         .catch((err)=>{
-            res.json({status:500,mensaje:"Envio fallido por user"})
+            // res.json({status:500,mensaje:"Envio fallido por user"})
         })
     })
     .catch((err)=>{
-        res.json({status:500,mensaje:"Envio fallido por venta"})
+        // res.json({status:500,mensaje:"Envio fallido por venta"})
     })
 
 }

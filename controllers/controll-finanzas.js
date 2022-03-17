@@ -23,13 +23,19 @@ controller.addGanancia = async (req,res)=>{
 
     await Venta.findById(id)
     .then((venta)=>{
-        var productos = venta.productos
-        var suma = 0
-        productos.forEach(element => {
-            suma = suma + (element.cantidad * element.valor);
-        });
+        var suma = 0;
+        venta.productos.forEach((producto)=>{ 
+            //recorremos sus productos y añadimos a la suma total
+            suma = suma + producto.cantidad * producto.valor
+        })
+        venta.servicios.forEach((service)=>{
+            //recorremos los valores de servicio y añadimos a la suma total
+            suma = suma + service.valor;
+        })
+        //truncar la suma total a un numero entero!
+        suma = Math.trunc((suma*venta.porcentaje)/100);
         
-        var valorAgregar = Math.trunc(suma*(venta.porcentaje/100))
+        var valorAgregar = Math.trunc(suma)
         Finanzas.findOne({})
         .then((finanza)=>{
             var ganancias = finanza.ganancias
@@ -49,13 +55,19 @@ controller.removeGanancia = async (req,res)=>{
     const{id} = req.body
     await Venta.findById(id)
     .then((venta)=>{
-        var productos = venta.productos
-        var suma = 0
-        productos.forEach(element => {
-            suma = suma + (element.cantidad * element.valor);
-        });
+        var suma = 0;
+        venta.productos.forEach((producto)=>{ 
+            //recorremos sus productos y añadimos a la suma total
+            suma = suma + producto.cantidad * producto.valor
+        })
+        venta.servicios.forEach((service)=>{
+            //recorremos los valores de servicio y añadimos a la suma total
+            suma = suma + service.valor;
+        })
+        //truncar la suma total a un numero entero!
+        suma = Math.trunc((suma*venta.porcentaje)/100);
         
-        var valorRemove = Math.trunc(suma*(venta.porcentaje/100))
+        var valorRemove = Math.trunc(suma);
         Finanzas.findOne({})
         .then((finanza)=>{
             var ganancias = finanza.ganancias
