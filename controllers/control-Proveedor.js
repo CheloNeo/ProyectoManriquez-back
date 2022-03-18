@@ -3,8 +3,16 @@ const Proveedor = require('../models/Proveedor');
 
 
 //crear proveedor
-controller.crearProveedor = (req,res)=>{
+controller.crearProveedor = async (req,res)=>{
+    const {rut} = req.body;
     try {
+        const proveedorFind = await Proveedor.findOne({rut})
+        if(proveedorFind){
+            return res.json({
+                status:400,
+                mensaje:"Proveedor ya existe"
+            })
+        }
         const proveedor = new Proveedor(req.body) //creamos un nuevo proveedor
         proveedor.save() //guardamos el nuevo proveedor creado
         .then((data)=>{
