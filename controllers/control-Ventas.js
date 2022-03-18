@@ -271,14 +271,14 @@ controller.modificarEstado = async (req,res)=>{
         .catch((err)=>{
          
 
-            res.json({status:500,mensaje:"No se encontro el cliente!"})
+            // res.json({status:500,mensaje:"No se encontro el cliente!"})
         })
 
         
     })
     .catch((err)=>{
        
-        res.json({status:500,mensaje:"No se encontro la venta :)"})
+        // res.json({status:500,mensaje:"No se encontro la venta :)"})
     })
     
 }

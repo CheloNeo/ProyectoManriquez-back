@@ -80,10 +80,10 @@ controller.getCliente_Estadistica = async (req,res)=>{
         await Cliente.find({},{
             _id:0,
             nombre:1,
-            totalDeCompra:1
+            totalDeCompra:1,
         }).then((data)=>{ res.json({status:200,clientes: data});})
     } catch (error) {
-    
+        console.log(error)
     }
 }
 
