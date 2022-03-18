@@ -110,7 +110,23 @@ controller.searchCliente = async(req,res)=>{
        
     }
 }
-
+controller.modificarCliente = async (req, res)=>{
+    const clienteOriginal = await Cliente.findOneAndUpdate({rut:req.params.id},{$set:{
+        nombre:req.body.nombre,
+        rut: req.body.rut,
+        direccion: req.body.direccion,
+        comuna: req.body.comuna,
+        ciudad: req.body.ciudad,
+        telefono:req.body.telefono,
+        correo:req.body.correo,    
+    }})
+    .then((data)=>{
+        res.json({status:200, mensaje: "Cambios Realizados con exito"})
+    })    
+    .catch((err)=>{
+        console.log(err,"Cago todo")
+    })
+}
 controller.searchClienteVentaUnica = async (req,res)=>{
     const { data , rut }  = req.body;
     
