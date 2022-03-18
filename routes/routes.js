@@ -43,6 +43,7 @@ router.get('/getCliente/estadistica',controller_Cliente.getCliente_Estadistica);
 router.get('/search/cliente/:rut',controller_Cliente.searchCliente)
 router.post('/get/venta/cliente/',controller_Cliente.searchClienteVentaUnica);
 router.post('/calcular/total/Venta',controller_Cliente.calcularTotalVenta);
+router.put('/update/Cliente/:id',controller_Cliente.modificarCliente);
 
 //actualizar
 
