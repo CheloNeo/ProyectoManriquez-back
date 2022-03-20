@@ -67,7 +67,7 @@ controller.eliminarCategoria = (req, res)=>{
 
 
 controller.getCategoria = async(req,res)=>{
-    await Categoria.find()
+    await Categoria.find({},{})
     .then((data)=>{
         res.json(data)
     })
