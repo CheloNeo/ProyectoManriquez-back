@@ -10,11 +10,11 @@ let app = express();
 
 // Proteccion de rutas
 
-// let corsOptions = {
-//     origin:'http://localhost:4200/',
-//     optionsSuccessStatus: 200,
-//     methods: "GET , PUT , POST , DELETE"
-// };
+let corsOptions = {
+    origin:'http://localhost:4200/',
+    optionsSuccessStatus: 200,
+    methods: "GET , PUT , POST , DELETE"
+};
 
 
 // en este caso se permitiran consultas de hasta 100mb para los tokens
