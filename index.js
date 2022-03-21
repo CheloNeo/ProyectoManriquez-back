@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 require('dotenv').config();
 
 
@@ -11,11 +12,12 @@ let app = express();
 // Proteccion de rutas
 
 let corsOptions = {
-    origin:'http://localhost:4200/',
+    origin:'https://pisos-manriquez.herokuapp.com/',
     optionsSuccessStatus: 200,
     methods: "GET , PUT , POST , DELETE"
 };
 
+app.use( express.static('public') );
 
 // en este caso se permitiran consultas de hasta 100mb para los tokens
 let bodyParser = require('body-parser');
@@ -30,13 +32,16 @@ require('./mongo-db');
 
 app.use(morgan('dev'));
 app.use(express.json());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Ocuparemos las opciones de cors 
 app.use(cors()); 
 
 app.use('/api',require('./routes/routes'));
 
+app.get('*',(req,res)=>{
+    res.sendFile( path.resolve(__dirname,'public/index.html'));
+})
 //configuracion del puerto
 app.set('port', process.env.PORT || 4000);
 
