@@ -16,6 +16,7 @@ let corsOptions = {
     methods: "GET , PUT , POST , DELETE"
 };
 
+app.use( express.static('public') );
 
 // en este caso se permitiran consultas de hasta 100mb para los tokens
 let bodyParser = require('body-parser');
@@ -37,6 +38,9 @@ app.use(cors());
 
 app.use('/api',require('./routes/routes'));
 
+app.get('*',(req,res)=>{
+    res.sendFile( path.resolve(__dirname,'public/index.html'));
+})
 //configuracion del puerto
 app.set('port', process.env.PORT || 4000);
 
