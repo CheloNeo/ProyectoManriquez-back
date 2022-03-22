@@ -76,12 +76,47 @@ controller.verClientes = async (req, res) => {
 }
 
 controller.getCliente_Estadistica = async (req,res)=>{
+
+    let clientes = [];
+    
+
     try {
         await Cliente.find({},{
             _id:0,
             nombre:1,
             totalDeCompra:1,
-        }).then((data)=>{ res.json({status:200,clientes: data});})
+            historial:1,
+        }).then(
+            data=>{
+                data.map((cliente)=>{
+                    var totalDeVenta = 0
+                    cliente.historial.map((venta)=>{
+                        if(venta.estado != "cotizado" && venta.estado != "pendiente"){
+                            if(venta.estado === "abonado"){
+                                //venta abonada
+                                totalDeVenta = totalDeVenta + venta.abonado
+
+                            }
+                            else if(venta.estado === "pagado"){
+                                // venta pagada
+                                totalDeVenta = totalDeVenta + venta.totalDeVenta
+
+                            }
+                            
+                        }
+
+                    })
+                    cliente.totalDeCompra = totalDeVenta
+                    
+                    clientes.push(cliente)
+                
+                }) 
+
+            }
+        )
+
+        res.json({status:200,clientes: clientes})
+
     } catch (error) {
         console.log(error)
     }
