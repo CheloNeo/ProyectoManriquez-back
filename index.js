@@ -11,11 +11,11 @@ let app = express();
 
 // Proteccion de rutas
 
-    // let corsOptions = {
-    //     origin:'http://localhost:4200',
-    //     optionsSuccessStatus: 200,
-    //     methods: "GET , PUT , POST , DELETE"
-    // };
+    let corsOptions = {
+        origin:'http://localhost:4200',
+        optionsSuccessStatus: 200,
+        methods: "GET , PUT , POST , DELETE"
+    };
 
 app.use( express.static('public') );
 
@@ -39,9 +39,7 @@ app.use(cors());
 
 app.use('/api',require('./routes/routes'));
 
-app.get('*',(req,res)=>{
-    res.sendFile( path.resolve(__dirname,'public/index.html'));
-})
+
 //configuracion del puerto
 app.set('port', process.env.PORT || 4000);
 
