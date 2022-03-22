@@ -11,11 +11,11 @@ let app = express();
 
 // Proteccion de rutas
 
-let corsOptions = {
-    origin:'https://pisos-manriquez.herokuapp.com/',
-    optionsSuccessStatus: 200,
-    methods: "GET , PUT , POST , DELETE"
-};
+    // let corsOptions = {
+    //     origin:'http://localhost:4200',
+    //     optionsSuccessStatus: 200,
+    //     methods: "GET , PUT , POST , DELETE"
+    // };
 
 app.use( express.static('public') );
 
@@ -32,7 +32,7 @@ require('./mongo-db');
 
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Ocuparemos las opciones de cors 
 app.use(cors()); 
