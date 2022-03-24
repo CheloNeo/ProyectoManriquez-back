@@ -57,11 +57,8 @@ controller.verClientes = async (req, res) => {
     try {
         const clientes = await Cliente.find({},{
             nombre: 1,
-            direccion: 1,
-            telefono: 1,
-            correo: 1,
             rut: 1,
-            totalDeCompra:1,
+            
         });
         
         res.json({status:200,clientes: clientes});
