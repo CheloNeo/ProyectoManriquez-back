@@ -101,8 +101,10 @@ router.post('/modify/one',controller_pendiente.updateOne);
 //finanzas
 router.post('/add/venta/finanzas',controller_finanzas.addGanancia)
 router.post('/deleteVenta/finanzas',controller_finanzas.removeGanancia)
-router.post('/new/finanza',controller_finanzas.addFinanza)
+router.post('/add/abono/venta',controller_finanzas.addAbono)
+router.post('/delete/abono/venta',controller_finanzas.deleteAbono)
 router.post('/add/finanzas/gastos',controller_finanzas.addGasto)
+router.post('/new/finanza',controller_finanzas.addFinanza)
 router.get('/get/finanzas',controller_finanzas.getFinanzas)
 
 //abono

@@ -115,7 +115,6 @@ controller.getCliente_Estadistica = async (req,res)=>{
         res.json({status:200,clientes: clientes})
 
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -156,7 +155,6 @@ controller.modificarCliente = async (req, res)=>{
         res.json({status:200, mensaje: "Cambios Realizados con exito"})
     })    
     .catch((err)=>{
-        console.log(err,"Cago todo")
     })
 }
 controller.searchClienteVentaUnica = async (req,res)=>{
@@ -173,7 +171,6 @@ controller.searchClienteVentaUnica = async (req,res)=>{
                 
                 Ventas.findById(data,{})
                 .then((dataVenta)=>{
-                    console.log(dataVenta)
                     if(dataVenta!=null){
                             res.json({status:200,data:cliente,dataVenta})
                     }

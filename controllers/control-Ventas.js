@@ -16,7 +16,6 @@ controller.crearVenta = async (req,res)=>{
     rut_cliente = venta.cliente.rut
     proveedor = venta.proveedor
     comentario = venta.comentario
-    // console.log(venta)
     await Cliente.findOne({rut:rut_cliente},{historial:1})
     .then((data)=>{
         if(data!=null){
@@ -181,7 +180,6 @@ controller.addAbono = async (req,res) =>{
         var abonoActual = venta.abono;
         var TotalActual = venta.totalDeVenta;
         var rut = venta.cliente.rut
-        console.log(venta)
 
         //calculamos que el abono no se exceda!
         if(abonoActual+parseInt(valorAbono) > TotalActual){
