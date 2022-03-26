@@ -12,6 +12,8 @@ const VentaSchema = Schema({
         nombre: String,
         apellidos: String,
         direccion: String,
+        comuna: String,
+        ciudad: String,
         telefono: String,
         correo: String,
         rut: String,

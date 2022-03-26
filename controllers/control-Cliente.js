@@ -59,6 +59,8 @@ controller.verClientes = async (req, res) => {
             nombre: 1,
             direccion: 1,
             telefono: 1,
+            comuna:1,
+            ciudad:1,
             correo: 1,
             rut: 1,
             totalDeCompra:1,
@@ -170,7 +172,7 @@ controller.searchClienteVentaUnica = async (req,res)=>{
     }
     else{
         try {
-            await Cliente.findOne({rut},{nombre:1,direccion:1,telefono:1,correo:1,rut:1})
+            await Cliente.findOne({rut},{nombre:1,direccion:1,comuna:1,ciudad:1,telefono:1,correo:1,rut:1})
             .then((data1)=>{
                 var cliente = data1
                 
