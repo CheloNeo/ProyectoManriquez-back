@@ -12,7 +12,7 @@ let app = express();
 // Proteccion de rutas
 
     let corsOptions = {
-        origin:'https://pisosmanriquez-843f6.web.app/',
+        origin:'https://applied-well-327414.web.app/',
         optionsSuccessStatus: 200,
         methods: "GET , PUT , POST , DELETE"
     };
