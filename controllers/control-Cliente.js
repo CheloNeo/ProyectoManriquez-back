@@ -57,14 +57,11 @@ controller.verClientes = async (req, res) => {
     try {
         const clientes = await Cliente.find({},{
             nombre: 1,
-<<<<<<< HEAD
             direccion: 1,
             telefono: 1,
             comuna:1,
             ciudad:1,
             correo: 1,
-=======
->>>>>>> 6350d39e81e8104b470c27b5ec6555e0c4bbf073
             rut: 1,
 
         });
