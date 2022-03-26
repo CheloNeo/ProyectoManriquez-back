@@ -23,17 +23,9 @@ controller.addGanancia = async (req,res)=>{
 
     await Venta.findById(id)
     .then((venta)=>{
-        var suma = 0;
-        venta.productos.forEach((producto)=>{ 
-            //recorremos sus productos y añadimos a la suma total
-            suma = suma + producto.cantidad * producto.valor
-        })
-        venta.servicios.forEach((service)=>{
-            //recorremos los valores de servicio y añadimos a la suma total
-            suma = suma + service.valor;
-        })
+       
         //truncar la suma total a un numero entero!
-        suma = Math.trunc((suma*venta.porcentaje)/100);
+        suma = Math.trunc((venta.totalDeVenta*venta.porcentaje)/100);
         
         var valorAgregar = Math.trunc(suma)
         Finanzas.findOne({})
@@ -42,6 +34,7 @@ controller.addGanancia = async (req,res)=>{
             ganancias = ganancias + valorAgregar
             Finanzas.findByIdAndUpdate(finanza._id,{$set:{ganancias:ganancias}})
             .then(()=>{
+                console.log(valorAgregar)
                 res.json({status:200,mensaje:"Ganancia actualizada"})
             })
         })
@@ -56,16 +49,9 @@ controller.removeGanancia = async (req,res)=>{
     await Venta.findById(id)
     .then((venta)=>{
         var suma = 0;
-        venta.productos.forEach((producto)=>{ 
-            //recorremos sus productos y añadimos a la suma total
-            suma = suma + producto.cantidad * producto.valor
-        })
-        venta.servicios.forEach((service)=>{
-            //recorremos los valores de servicio y añadimos a la suma total
-            suma = suma + service.valor;
-        })
+        
         //truncar la suma total a un numero entero!
-        suma = Math.trunc((suma*venta.porcentaje)/100);
+        suma = Math.trunc((venta.totalDeVenta*venta.porcentaje)/100);
         
         var valorRemove = Math.trunc(suma);
         Finanzas.findOne({})
@@ -82,6 +68,53 @@ controller.removeGanancia = async (req,res)=>{
 
 
 }
+
+controller.addAbono = async (req,res)=>{
+
+    const{id} = req.body;
+    await Venta.findById(id)
+    .then((venta)=>{
+        
+        Finanzas.findOne({})
+        .then((finanza)=>{
+            var ganancias = finanza.ganancias
+            
+            ganancias = ganancias + ((venta.abono*venta.porcentaje)/100)
+            Finanzas.findByIdAndUpdate(finanza._id,{$set:{ganancias:ganancias}})
+            .then(()=>{
+                res.json({status:200,mensaje:"Ganancia actualizada"})
+            })
+        })
+        
+    })
+
+
+}
+
+controller.deleteAbono = async (req,res)=>{
+    const{id} = req.body;
+    await Venta.findById(id)
+    .then((venta)=>{
+        
+        Finanzas.findOne({})
+        .then((finanza)=>{
+            var ganancias = finanza.ganancias
+            ganancias = ganancias - ((venta.abono*venta.porcentaje)/100)
+            Finanzas.findByIdAndUpdate(finanza._id,{$set:{ganancias:ganancias}})
+            .then(()=>{
+                Venta.findByIdAndUpdate(id,{$set:{abono:0}}).then(()=>{
+                    res.json({status:200,mensaje:"Ganancia actualizada"})
+
+                })
+            })
+        })
+       
+        
+    })
+
+
+}
+
 
 
 controller.addGasto = async (req,res)=>{

@@ -84,7 +84,18 @@ controller.eliminarProducto = (req, res)=>{
 
 
 controller.getProductos= async(req,res)=>{
-    await Producto.find()
+    await Producto.find({},{
+
+        nombre: 1,
+        valor: 1,
+        unidadMedida:1,
+        descripcion: 1,
+        categoria:1,
+        stock:1,
+        vecesComprado:1,
+        color:1,
+
+    })
     .then((data)=>{
         res.json(data);
     })
@@ -97,7 +108,16 @@ controller.getProductos= async(req,res)=>{
 controller.getForCategory = async (req,res) =>{
     const{ data } = req.body
    
-    await Producto.find({categoria:data}).exec()
+    await Producto.find({categoria:data},{
+        nombre: 1,
+        valor: 1,
+        unidadMedida:1,
+        descripcion: 1,
+        categoria:1,
+        stock:1,
+        vecesComprado:1,
+        color:1,
+    }).exec()
     .then((dataProduct)=>{
         
         res.json(dataProduct)

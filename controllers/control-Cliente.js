@@ -57,13 +57,16 @@ controller.verClientes = async (req, res) => {
     try {
         const clientes = await Cliente.find({},{
             nombre: 1,
+<<<<<<< HEAD
             direccion: 1,
             telefono: 1,
             comuna:1,
             ciudad:1,
             correo: 1,
+=======
+>>>>>>> 6350d39e81e8104b470c27b5ec6555e0c4bbf073
             rut: 1,
-            totalDeCompra:1,
+
         });
         
         res.json({status:200,clientes: clientes});
@@ -120,7 +123,6 @@ controller.getCliente_Estadistica = async (req,res)=>{
         res.json({status:200,clientes: clientes})
 
     } catch (error) {
-        console.log(error)
     }
 }
 
@@ -161,7 +163,6 @@ controller.modificarCliente = async (req, res)=>{
         res.json({status:200, mensaje: "Cambios Realizados con exito"})
     })    
     .catch((err)=>{
-        console.log(err,"Cago todo")
     })
 }
 controller.searchClienteVentaUnica = async (req,res)=>{
@@ -178,7 +179,6 @@ controller.searchClienteVentaUnica = async (req,res)=>{
                 
                 Ventas.findById(data,{})
                 .then((dataVenta)=>{
-                    console.log(dataVenta)
                     if(dataVenta!=null){
                             res.json({status:200,data:cliente,dataVenta})
                     }
