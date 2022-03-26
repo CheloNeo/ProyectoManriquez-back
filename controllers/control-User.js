@@ -137,8 +137,14 @@ controller.sendMail = async (req,res)=>{
             </p>
             <h3>Codigo: &nbsp;${largo} </h3>` // html body
         });
-        res.json({status:200,mensaje:"Correo Enviado con exito!"})
 
+        Usuario.findOneAndUpdate({rut},{$set:{"validacion":largo}})
+        .then((data)=>{
+            res.json({status:200,mensaje:"Correo Enviado con exito!"})
+
+        })
+        
+        
        }
        else{
         res.json({status:500,mensaje:"Usuario no encontrado!"})
@@ -149,9 +155,14 @@ controller.sendMail = async (req,res)=>{
 
 controller.sendCodigo = async (req,res)=>{
     const{rut,codigo}=req.body;
-    await Usuario.findOneAndUpdate({"validacion":codigo})
-    .then(()=>{
-        res.json({status:200,mensaje:"Codigo correcto!"})
+    await Usuario.findOne({rut})
+    .then((data)=>{
+        if(codigo == data.validacion){
+            res.json({status:200,mensaje:"Codigo correcto!"})
+        }
+        else{
+            res.json({status:500,mensaje:"Codigo invalido!"})
+        }
     })
     .catch(()=>{
         res.json({status:500,mensaje:"Codigo invalido!"})
@@ -164,7 +175,7 @@ controller.modifyPass = async (req,res)=>{
     const salt = bcrypt.genSaltSync();
     passEncrypt= bcrypt.hashSync(pass, salt);
 
-    await Usuario.findOneAndUpdate({"pass":passEncrypt})
+    await Usuario.findOneAndUpdate({rut},{$set:{"pass":passEncrypt}})
     .then(()=>{
         res.json({status:200,mensaje:"contraseña modificada con exito!"})
     })
