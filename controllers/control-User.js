@@ -76,7 +76,7 @@ controller.validateToken = async (req, res)=>{
     try {
         const validation = jwt.verify(token, process.env.SECRET_KEY)
         const respuesta =   generarToken();
-        res.send(respuesta);
+        res.json(respuesta);
 
         
     } catch (error) {   

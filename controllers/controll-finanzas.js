@@ -30,6 +30,7 @@ controller.addGanancia = async (req,res)=>{
         var valorAgregar = Math.trunc(suma)
         Finanzas.findOne({})
         .then((finanza)=>{
+            
             var ganancias = finanza.ganancias
             ganancias = ganancias + valorAgregar
             Finanzas.findByIdAndUpdate(finanza._id,{$set:{ganancias:ganancias}})

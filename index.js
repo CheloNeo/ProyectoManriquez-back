@@ -12,7 +12,8 @@ let app = express();
 // Proteccion de rutas
 
     let corsOptions = {
-        origin:'https://pisos-manriquez-16de3.web.app/',
+        // origin:'https://pisos-manriquez-16de3.web.app/',
+        origin:'http://localhost:4200/',
         optionsSuccessStatus: 200,
         methods: "GET , PUT , POST , DELETE"
     };
