@@ -10,6 +10,8 @@ let controller_Product = require('../controllers/control-Productos')
 let controller_categoria = require('../controllers/control-Categoria')
 let controller_pendiente = require('../controllers/controller-Pendiente')
 let controller_finanzas = require('../controllers/controll-finanzas')
+let controller_contador = require('../controllers/contador')
+
 //login
 router.post('/new', controller_User.creacionUser);
 router.post('/login', controller_User.login);
@@ -111,5 +113,7 @@ router.get('/get/finanzas',controller_finanzas.getFinanzas)
 
 router.post('/add/abono',controller_Ventas.addAbono)
 
-
+router.get('/get/contador/:tipo',controller_contador.getContador);
+router.put('/update/contador/:tipo/:valor',controller_contador.sendContador)
+router.post('/create/contador',controller_contador.createContador)
 module.exports = router;
