@@ -128,6 +128,7 @@ controller.getVentaComponent = async(req,res)=>{
             productos:1,
             totalDeVenta:1,
             envio:1,
+            servicios:1,
 
         }).then((data)=>{
             res.json(data)
