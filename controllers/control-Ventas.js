@@ -113,6 +113,7 @@ controller.getVenta = async (req,res)=>{
     try {
         await Venta.find({},{fecha:1,totalDeVenta:1,estado:1})
         .then((data)=>{
+           
             res.json({status:200,data:data})
         })
     } catch (error) {
@@ -131,13 +132,16 @@ controller.getVentaComponent = async(req,res)=>{
             servicios:1,
 
         }).then((data)=>{
-            res.json(data)
+            const newData  = data.reverse();
+            res.json(newData)
         })
         .catch((err)=>{
-           
+           console.log(err);
+           res.json({status:500,mensaje:"Error al obtener ventas"})
         })
     } catch (error) {
-        
+        console.log(error)
+        res.json({status:500,mensaje:"Error al obtener ventas"})
     }
 }
 
